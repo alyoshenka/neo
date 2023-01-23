@@ -1,5 +1,8 @@
 # Project Neo
 
+### Associated Projects
+- [Stock Ticker](https://github.com/alyoshenka/stockticker)
+
 ## Demo Videos
 
 ### Stock Ticker
