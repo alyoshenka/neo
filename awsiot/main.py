@@ -1,11 +1,11 @@
 """Subscribes to topic 'sub_topic', listens for 20s, then exits"""
 
-# todo: fixme
 # pylint: disable=superfluous-parens
 # pylint: disable=unspecified-encoding
 # pylint: disable=import-error
 # pylint: disable=consider-using-f-string
 # pylint: disable=fixme
+# todo: fixme
 
 import json
 import time as t
