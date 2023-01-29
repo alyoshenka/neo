@@ -2,9 +2,9 @@
 
 # todo: fixme
 # pylint: disable=superfluous-parens
-
+# pylint: disable=unspecified-encoding
 # pylint: disable=import-error
-
+# pylint: disable=consider-using-f-string
 # pylint: disable=fixme
 
 import json
