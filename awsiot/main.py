@@ -7,6 +7,7 @@ from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
 
 # pylint: disable=superfluous-parens
+# pylint: disable=consider-using-f-string
 
 # todo: secrets with python
 CERTS_DIR = '/home/jay/Desktop/credentials/aws/iot/' # Where certificates are stored
