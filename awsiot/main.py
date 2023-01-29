@@ -1,17 +1,17 @@
 """Subscribes to topic 'sub_topic', listens for 20s, then exits"""
 
+# todo: fixme
+# pylint: disable=superfluous-parens
+
+# pylint: disable=import-error
+
+# pylint: disable=fixme
+
 import json
 import time as t
 
 from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
-
-# todo: fixme
-# pylint: disable=superfluous-parens
-# pylint: disable=consider-using-f-string
-# pylint: disable=import-error
-# pylint: disable=unspecified-encoding
-# pylint: disable=fixme
 
 # todo: secrets with python
 CERTS_DIR = '/home/jay/Desktop/credentials/aws/iot/' # Where certificates are stored
