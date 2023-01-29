@@ -6,6 +6,8 @@ import time as t
 from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
 
+# pylint: disable=superfluous-parens
+
 # todo: secrets with python
 CERTS_DIR = '/home/jay/Desktop/credentials/aws/iot/' # Where certificates are stored
 # ENDPOINT = None # AWS endpoint
@@ -20,7 +22,7 @@ MESSAGE = 'hello!' # message to send
 SUB_TOPIC = "sub_topic" # topic to subscribe to
 
 def initialize_mqtt_connection():
-    """Initializes the connection to AWS"""   
+    """Initializes the connection to AWS"""
 
     with open(CERTS_DIR + 'endpoint.txt', 'r') as endpoint_file:
         # pylint: disable=invalid-name
@@ -32,25 +34,25 @@ def initialize_mqtt_connection():
     host_resolver = io.DefaultHostResolver(event_loop_group)
     client_bootstrap = io.ClientBootstrap(event_loop_group, host_resolver)
     mqtt_connection = mqtt_connection_builder.mtls_from_path(
-                endpoint=ENDPOINT,
-                cert_filepath=CERT,
-                pri_key_filepath=KEY,
-                client_bootstrap=client_bootstrap,
-                ca_filepath=ROOT_CA,
-                client_id=CLIENT_ID,
-                clean_session=False,
-                keep_alive_secs=6
-                )
+        endpoint=ENDPOINT,
+        cert_filepath=CERT,
+        pri_key_filepath=KEY,
+        client_bootstrap=client_bootstrap,
+        ca_filepath=ROOT_CA,
+        client_id=CLIENT_ID,
+        clean_session=False,
+        keep_alive_secs=6
+        )
 
 
     print("Connecting to {} with client ID '{}'...".format(
-            ENDPOINT, CLIENT_ID))
+        ENDPOINT, CLIENT_ID))
     # Make the connect() call
     connect_future = mqtt_connection.connect()
     # Future.result() waits until a result is available
     connect_future.result()
     print("Connected!")
-    
+
     return mqtt_connection
 
 def on_connection_interrupted():
@@ -77,12 +79,13 @@ def publish(mqtt_connection, topic, message):
     data = "{}".format(MESSAGE)
     message = {"message" : data}
     mqtt_connection.publish(topic=topic, payload=json.dumps(message), qos=mqtt.QoS.AT_LEAST_ONCE)
-    print("Published: '" + json.dumps(message) + "' to the topic: " + topic)       
+    print("Published: '" + json.dumps(message) + "' to the topic: " + topic)
     print('Publish End')
 
 def subscribe(mqtt_connection, topic):
     """Subscribe to a topic"""
     print("Subscribing to topic '{}'...".format(SUB_TOPIC))
+    # pylint: disable=unused-variable
     subscribe_future, packet_id = mqtt_connection.subscribe(
         topic=topic,
         qos=mqtt.QoS.AT_LEAST_ONCE,
