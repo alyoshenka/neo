@@ -1,3 +1,8 @@
+"""
+Turns a light on/off depending on device/light/ desiredState value
+(requires CL arguments for necessary files)
+"""
+
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: Apache-2.0.
 
@@ -24,7 +29,8 @@ sys.path.insert(0, "aws-iot-device-sdk-python-v2/samples/")
 # since it is subscribed to that same topic.
 
 # Parse arguments
-import command_line_utils;
+# import command_line_utils
+import aws_iot_device_sdk_python_v2.samples.command_line_utils as command_line_utils
 cmdUtils = command_line_utils.CommandLineUtils("PubSub - Send and recieve messages through an MQTT connection.")
 cmdUtils.add_common_mqtt_commands()
 cmdUtils.add_common_topic_message_commands()

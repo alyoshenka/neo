@@ -1,0 +1,7 @@
+{
+    "python.analysis.extraPaths": [
+        "./awsiot/aws-iot-device-sdk-python-v2/samples"
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
+}
