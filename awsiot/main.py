@@ -23,6 +23,7 @@ def initialize_mqtt_connection():
     """Initializes the connection to AWS"""   
 
     with open(CERTS_DIR + 'endpoint.txt', 'r') as endpoint_file:
+        # pylint: disable=invalid-name
         ENDPOINT = endpoint_file.readline()
         endpoint_file.close()
 
