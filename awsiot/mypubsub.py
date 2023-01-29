@@ -137,6 +137,7 @@ if __name__ == '__main__':
         else:
             print ("Sending {} message(s)".format(message_count))
 
+        """
         publish_count = 1
         while (publish_count <= message_count) or (message_count == 0):
             #message = "{}".format(message_string)
@@ -149,6 +150,7 @@ if __name__ == '__main__':
                 qos=mqtt.QoS.AT_LEAST_ONCE)
             time.sleep(1)
             publish_count += 1
+            """
 
     # Wait for all messages to be received.
     # This waits forever if count was set to 0.
