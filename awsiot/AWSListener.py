@@ -1,8 +1,11 @@
-from awscrt import io, mqtt, auth, http
+"""Honestly can't remember"""
+
+import threading
+from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
 
-import json
-import threading
+
+
 
 class AWSListener:
 
