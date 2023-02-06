@@ -1,9 +1,9 @@
 """Subscribes to topic 'sub_topic', listens for 20s, then exits"""
 
 # pylint: disable=superfluous-parens
-# pylin: disable=unspecified-encoding
+# pylint: disable=unspecified-encoding
 # pylint: disable=import-error
-# pylin: disable=consider-using-f-string
+# pylint: disable=consider-using-f-string
 # pylint: disable=fixme
 # todo: fixme
 
