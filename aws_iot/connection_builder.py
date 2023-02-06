@@ -1,32 +1,15 @@
-"""Subscribes to topic 'sub_topic', listens for 20s, then exits"""
+"""Handles building connections to AWS via MQTT protocol"""
 
 # pylint: disable=superfluous-parens
-# pylint: disable=unspecified-encoding
-# pylint: disable=import-error
-# pylint: disable=consider-using-f-string
-# pylint: disable=fixme
-# todo: fixme
 
 import json
-import time as t
-
 from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
 
-# todo: secrets with python
-CERTS_DIR = '/home/jay/Desktop/credentials/aws/iot/' # Where certificates are stored
-# ENDPOINT = None # AWS endpoint
-CLIENT_ID = 'Hubble' # Can be whatever
-CERT = CERTS_DIR + 'Hubble.cert.pem' # Device certificate
-KEY = CERTS_DIR + 'Hubble.private.key' # Private key
-ROOT_CA = CERTS_DIR + 'root-CA.crt' # todo: what is this?
+from info import CERTS_DIR, CERT, KEY, ROOT_CA, CLIENT_ID
 
-PUB_TOPIC = 'test' # Topic to publish to
-MESSAGE = 'hello!' # message to send
 
-SUB_TOPIC = "sub_topic" # topic to subscribe to
-
-def initialize_mqtt_connection():
+def create_mqtt_connection():
     """Initializes the connection to AWS"""
 
     with open(CERTS_DIR + 'endpoint.txt', 'r') as endpoint_file:
@@ -81,7 +64,7 @@ def publish(mqtt_connection, topic, message):
     """Publish a message to a topic"""
     # Publish message to server desired number of times.
     print('Begin Publish')
-    data = "{}".format(MESSAGE)
+    data = "{}".format(message)
     message = {"message" : data}
     mqtt_connection.publish(topic=topic, payload=json.dumps(message), qos=mqtt.QoS.AT_LEAST_ONCE)
     print("Published: '" + json.dumps(message) + "' to the topic: " + topic)
@@ -89,7 +72,7 @@ def publish(mqtt_connection, topic, message):
 
 def subscribe(mqtt_connection, topic):
     """Subscribe to a topic"""
-    print("Subscribing to topic '{}'...".format(SUB_TOPIC))
+    print("Subscribing to topic '{}'...".format(topic))
     # pylint: disable=unused-variable
     subscribe_future, packet_id = mqtt_connection.subscribe(
         topic=topic,
@@ -103,9 +86,3 @@ def disconnect(mqtt_connection):
     disconnect_future = mqtt_connection.disconnect()
     disconnect_future.result()
     print("Disconnected")
-
-MQTT_CONNECTION = initialize_mqtt_connection()
-subscribe(MQTT_CONNECTION, SUB_TOPIC)
-publish(MQTT_CONNECTION, PUB_TOPIC, MESSAGE)
-t.sleep(20) # Keep the connection alive for 20s
-disconnect(MQTT_CONNECTION)
