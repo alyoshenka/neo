@@ -7,14 +7,14 @@ from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
 
 
-
 from info import CERTS_DIR, CERT, KEY, ROOT_CA, CLIENT_ID
 
 
 def create_mqtt_connection():
     """Initializes the connection to AWS"""
 
-    with open(CERTS_DIR + 'endpoint.txt', 'r') as endpoint_file:
+
+    with open(CERTS_DIR + 'endpoint.txt', 'r', encoding='utf-8') as endpoint_file:
         # pylint: disable=invalid-name
         ENDPOINT = endpoint_file.readline()
         endpoint_file.close()
@@ -34,9 +34,7 @@ def create_mqtt_connection():
         keep_alive_secs=6
         )
 
-
-    print("Connecting to {} with client ID '{}'...".format(
-        ENDPOINT, CLIENT_ID))
+    print(f'Connecting to {ENDPOINT} with client ID "{CLIENT_ID}"...')
     # Make the connect() call
     connect_future = mqtt_connection.connect()
     # Future.result() waits until a result is available
@@ -60,13 +58,13 @@ def on_resubscribe_complete():
 # not sure why this takes 2 args?
 def on_message_received(topic, payload):
     """Callback for when a message is received"""
-    print("Received message from topic '{}': {}".format(topic, payload))
+    print(f'Received message from topic "{topic}": {payload}')
 
 def publish(mqtt_connection, topic, message):
     """Publish a message to a topic"""
     # Publish message to server desired number of times.
     print('Begin Publish')
-    data = "{}".format(message)
+    data = f'{message}'
     message = {"message" : data}
     mqtt_connection.publish(topic=topic, payload=json.dumps(message), qos=mqtt.QoS.AT_LEAST_ONCE)
     print("Published: '" + json.dumps(message) + "' to the topic: " + topic)
@@ -74,14 +72,14 @@ def publish(mqtt_connection, topic, message):
 
 def subscribe(mqtt_connection, topic):
     """Subscribe to a topic"""
-    print("Subscribing to topic '{}'...".format(topic))
+    print(f'Subscribing to topic "{topic}"...')
     # pylint: disable=unused-variable
     subscribe_future, packet_id = mqtt_connection.subscribe(
         topic=topic,
         qos=mqtt.QoS.AT_LEAST_ONCE,
         callback=on_message_received)
     subscribe_result = subscribe_future.result()
-    print("Subscribed with {}".format(str(subscribe_result['qos'])))
+    print(f'Subscribed with: {(subscribe_result["qos"])}')
 
 def disconnect(mqtt_connection):
     """Disconnect"""
