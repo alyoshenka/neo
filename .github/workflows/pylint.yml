@@ -19,6 +19,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install pylint
         git submodule update --init --recursive
+        if [ -f aws_iot/requirements.txt ]; then pip install -r aws_iot/requirements.txt; fi
     - name: Analysing the code with pylint
       run: |
         pylint aws_iot/*.py
