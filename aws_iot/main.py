@@ -8,7 +8,7 @@
 
 import time as t
 
-from aws_iot.connection_builder import create_mqtt_connection, subscribe, publish, disconnect
+from connection_builder import create_mqtt_connection, subscribe, publish, disconnect
 
 
 
