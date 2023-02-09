@@ -1,0 +1,7 @@
+# It’s OK to name a loop variable "i"
+[BASIC]
+ good-names=i
+
+# disable all to-do's for now
+[MESSAGES CONTROL]
+  disable=fixme

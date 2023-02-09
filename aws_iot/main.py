@@ -1,6 +1,5 @@
 """Subscribes to topic 'sub_topic', listens for 20s, then exits"""
 
-# pylint: disable=fixme
 # todo: fixme
 
 import time as t

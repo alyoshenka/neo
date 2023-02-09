@@ -30,7 +30,7 @@ def create_mqtt_connection():
         clean_session=False,
         keep_alive_secs=6)
 
-    print('Connecting to', ENDPOINT, 'with client ID:', CLIENT_ID, '...')
+    print(f'Connecting to {ENDPOINT} with client ID: "{CLIENT_ID}"...')
     # Make the connect() call
     connect_future = mqtt_connection.connect()
     # Future.result() waits until a result is available
