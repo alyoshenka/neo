@@ -1,7 +1,5 @@
 """Handles building connections to AWS via MQTT protocol"""
 
-# pylint: disable=superfluous-parens
-
 import json
 from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
@@ -12,7 +10,6 @@ from info import CERTS_DIR, CERT, KEY, ROOT_CA, CLIENT_ID
 
 def create_mqtt_connection():
     """Initializes the connection to AWS"""
-
 
     with open(CERTS_DIR + 'endpoint.txt', 'r', encoding='utf-8') as endpoint_file:
         # pylint: disable=invalid-name
@@ -31,10 +28,9 @@ def create_mqtt_connection():
         ca_filepath=ROOT_CA,
         client_id=CLIENT_ID,
         clean_session=False,
-        keep_alive_secs=6
-        )
+        keep_alive_secs=6)
 
-    print(f'Connecting to {ENDPOINT} with client ID "{CLIENT_ID}"...')
+    print('Connecting to', ENDPOINT, 'with client ID:', CLIENT_ID, '...')
     # Make the connect() call
     connect_future = mqtt_connection.connect()
     # Future.result() waits until a result is available
