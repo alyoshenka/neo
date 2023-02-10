@@ -2,7 +2,7 @@
 
 
 import time as t
-from .connection_builder import create_mqtt_connection, subscribe, publish, disconnect
+from connection_builder import create_mqtt_connection, subscribe, publish, disconnect
 
 
 PUB_TOPIC = 'test' # Topic to publish to

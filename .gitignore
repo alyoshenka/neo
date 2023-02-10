@@ -1,4 +1,5 @@
 */aws_iot_device_sdk*
+.env
 
 # --- Github Python .gitignore
 
