@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build:
-  name: lint
+    name: pylint
     runs-on: ubuntu-latest
     strategy:
       matrix:
