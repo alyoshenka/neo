@@ -4,6 +4,7 @@ on: [push, pull_request]
 
 jobs:
   build:
+  name: lint
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,4 +23,4 @@ jobs:
         if [ -f aws_iot/requirements.txt ]; then pip install -r aws_iot/requirements.txt; fi
     - name: Analysing the code with pylint
       run: |
-        pylint aws_iot/
+        pylint aws_iot/ tests/

@@ -1,6 +1,6 @@
 # Fixes import errors
 [MASTER]
-init-hook='import sys; sys.path.append("aws_iot/")'
+init-hook='import sys; sys.path.append("aws_iot/"); sys.path.append("tests/")'
 
 # It’s OK to name a loop variable "i"
 [BASIC]
@@ -8,4 +8,4 @@ init-hook='import sys; sys.path.append("aws_iot/")'
 
 # disable all to-do's for now
 [MESSAGES CONTROL]
-  disable=fixme
+  disable=fixme,broad-exception-caught

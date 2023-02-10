@@ -5,7 +5,7 @@ from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
 
 
-from info import CERTS_DIR, CERT, KEY, ROOT_CA, CLIENT_ID
+from .info import CERTS_DIR, CERT, KEY, ROOT_CA, CLIENT_ID
 
 
 def create_mqtt_connection():
