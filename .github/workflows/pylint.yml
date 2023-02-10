@@ -16,7 +16,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python3 -m pip install --upgrade pip
+        python -m pip install --upgrade pip
         pip install pylint==2.2.2
         git submodule update --init --recursive
         if [ -f aws_iot/requirements.txt ]; then pip install -r aws_iot/requirements.txt; fi
