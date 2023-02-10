@@ -1,10 +1,14 @@
-name: Pylint
+name: Lint and Test application
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
 
 jobs:
   build:
-    name: pylint
+    name: lint and test
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -24,3 +28,6 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pylint aws_iot/ tests/
+    - name: Testing the code with pytest
+      run: |
+        pytest
