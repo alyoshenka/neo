@@ -1,43 +1,40 @@
 """Handles building connections to AWS via MQTT protocol"""
 
+import os
 import json
 from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
 from dotenv import load_dotenv
-import os
 
-
-# from .info import CERTS_DIR, CERT, KEY, ROOT_CA, CLIENT_ID
 
 # todo: callbacks
 def create_mqtt_connection():
     """Initializes the connection to AWS"""
-  
-    # Load secrets
-    CLIENT_ID = 'Hubble'
-    load_dotenv()
-    ENDPOINT = os.environ.get('endpoint')
-    # convert to bytes
-    CERT =     str.encode(os.environ.get('hubble_cert_pem'))
-    KEY =      str.encode(os.environ.get('hubble_private_key'))
-    ROOT_CA =  str.encode(os.environ.get('root_ca_crt'))
 
+    # Load secrets
+    client_id = 'Hubble'
+    load_dotenv()
+    endpoint = os.environ.get('endpoint')
+    # convert to bytes
+    cert =     str.encode(os.environ.get('hubble_cert_pem'))
+    key =      str.encode(os.environ.get('hubble_private_key'))
+    root_ca =  str.encode(os.environ.get('root_ca_crt'))
 
     # Spin up resources
     event_loop_group = io.EventLoopGroup(1)
     host_resolver = io.DefaultHostResolver(event_loop_group)
     client_bootstrap = io.ClientBootstrap(event_loop_group, host_resolver)
     mqtt_connection = mqtt_connection_builder.mtls_from_bytes(
-        endpoint=ENDPOINT,
-        cert_bytes=CERT,
-        pri_key_bytes=KEY,
+        endpoint=endpoint,
+        cert_bytes=cert,
+        pri_key_bytes=key,
         client_bootstrap=client_bootstrap,
-        ca_bytes=ROOT_CA,
-        client_id=CLIENT_ID,
+        ca_bytes=root_ca,
+        client_id=client_id,
         clean_session=False,
         keep_alive_secs=6)
 
-    print(f'Connecting to {ENDPOINT} with client ID: "{CLIENT_ID}"...')
+    print(f'Connecting to {endpoint} with client ID: "{client_id}"...')
     # Make the connect() call
     connect_future = mqtt_connection.connect()
     # Future.result() waits until a result is available
