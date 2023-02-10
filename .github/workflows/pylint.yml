@@ -17,6 +17,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        pip install isort>=4.2.5,<5
         pip install pylint==2.2.2
         git submodule update --init --recursive
         if [ -f aws_iot/requirements.txt ]; then pip install -r aws_iot/requirements.txt; fi
