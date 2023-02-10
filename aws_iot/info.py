@@ -1,6 +1,5 @@
 """Contains location information"""
 
-# pylint: disable=fixme
 # todo: do this better
 
 # todo: secrets with python
