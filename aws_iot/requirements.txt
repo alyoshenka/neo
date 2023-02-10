@@ -1,4 +1,4 @@
 awscrt==0.8.0
 AWSIoTPythonSDK==1.5.2
 awsiotsdk==1.4.0
-dotenv==0.19.0
+
