@@ -15,11 +15,11 @@ def create_mqtt_connection():
     client_id = 'Hubble'
     load_dotenv()
     try:
-        endpoint = os.environ['endpoint']
+        endpoint = os.environ['ENDPOINT']
         # convert to bytes
-        cert =     str.encode(os.environ['hubble_cert_pem'])
-        key =      str.encode(os.environ['hubble_private_key'])
-        root_ca =  str.encode(os.environ['root_ca_crt'])
+        cert =     str.encode(os.environ['HUBBLE_CERT_PEM'])
+        key =      str.encode(os.environ['HUBBLE_PRIVATE_KEY'])
+        root_ca =  str.encode(os.environ['ROOT_CA_CRT'])
     except Exception as err:
         print('error loading env vars:', err)
         return None
