@@ -1,14 +1,23 @@
-name: Pylint
+name: Lint and Test application
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
 
 jobs:
   build:
-    name: pylint
+    name: lint and test
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ["3.7"]
+    env:
+      ENDPOINT: ${{ secrets.ENDPOINT }}
+      HUBBLE_CERT_PEM: ${{ secrets.HUBBLE_CERT_PEM }}
+      HUBBLE_PRIVATE_KEY: ${{ secrets.HUBBLE_PRIVATE_KEY }}
+      ROOT_CA_CRT: ${{ secrets.ROOT_CA_CRT }}
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -19,8 +28,13 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pylint==2.16.1
+        pip install pytest
+        python -m pip install python-dotenv
         git submodule update --init --recursive
         if [ -f aws_iot/requirements.txt ]; then pip install -r aws_iot/requirements.txt; fi
     - name: Analysing the code with pylint
       run: |
         pylint aws_iot/ tests/
+    - name: Testing the code with pytest
+      run: |
+        pytest
