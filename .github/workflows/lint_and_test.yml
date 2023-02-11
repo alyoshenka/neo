@@ -14,26 +14,16 @@ jobs:
       matrix:
         python-version: ["3.7"]
     env:
-      ENDPOINT: ${{ secrets.ENDPOINT }}
-      HUBBLE_CERT_PEM: ${{ secrets.HUBBLE_CERT_PEM }}
-      HUBBLE_PRIVATE_KEY: ${{ secrets.HUBBLE_PRIVATE_KEY }}
-      ROOT_CA_CRT: ${{ secrets.ROOT_CA_CRT }}
+      ENDPOINT: '${{ secrets.ENDPOINT }}''
+      HUBBLE_CERT_PEM: '${{ secrets.HUBBLE_CERT_PEM }}''
+      HUBBLE_PRIVATE_KEY: '${{ secrets.HUBBLE_PRIVATE_KEY }}''
+      ROOT_CA_CRT: '${{ secrets.ROOT_CA_CRT }}''
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    - name: test env
-      run: |
-        cat > showenv.py <<'EOF'
-        import os
-
-        print('endpoint', os.environ.get("ENDPOINT"))
-        EOF
-    - name: run env test
-      run: |
-        python showenv.py
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
