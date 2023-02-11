@@ -26,8 +26,15 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: test env
       run: |
-        import os
-        print({os.environ.get('endpoint')})
+        cat > showenv.py <<'EOF'
+          import os
+
+          print(f'Email username is {os.environ.get("EMAIL_USER", "<unknown")}')
+          print(f'Email password is {os.environ.get("EMAIL_PASSWORD", "<unknown")}')
+          EOF
+    - name: run env test
+      run: |
+        python showenv.py
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
