@@ -13,6 +13,11 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.7"]
+    env:
+      ENDPOINT: ${{ secrets.ENDPOINT }}
+      HUBBLE_CERT_PEM: ${{ secrets.HUBBLE_CERT_PEM }}
+      HUBBLE_PRIVATE_KEY: ${{ secrets.HUBBLE_PRIVATE_KEY }}
+      ROOT_CA_CRT: ${{ secrets.ROOT_CA_CRT }}
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
