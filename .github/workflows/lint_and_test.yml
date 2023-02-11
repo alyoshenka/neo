@@ -27,11 +27,11 @@ jobs:
     - name: test env
       run: |
         cat > showenv.py <<'EOF'
-          import os
+        import os
 
-          print(f'Email username is {os.environ.get("EMAIL_USER", "<unknown")}')
-          print(f'Email password is {os.environ.get("EMAIL_PASSWORD", "<unknown")}')
-          EOF
+        print(f'Email username is {os.environ.get("EMAIL_USER", "<unknown")}')
+        print(f'Email password is {os.environ.get("EMAIL_PASSWORD", "<unknown")}')
+        EOF
     - name: run env test
       run: |
         python showenv.py
