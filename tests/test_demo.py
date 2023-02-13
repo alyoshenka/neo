@@ -1,8 +1,8 @@
 """Tests for main module"""
 
-from aws_iot.main import main as app
+from aws_iot.demo import sub_pub as app
 
-def test_main():
+def test_demo():
     """Tests that main() runs without errors"""
     try:
         app(wait=0)
