@@ -60,21 +60,23 @@ def on_resubscribe_complete():
     print("Resubscribe complete")
 
 # not sure why this takes 2 args?
-def on_message_received(topic, payload):
+# todo: what action should this take?
+def print_message_received(topic, payload):
     """Callback for when a message is received"""
-    print(f'Received message from topic "{topic}": {payload}')
+    print(f'Received message from topic "{topic}": {payload}; returning')
 
 def publish(mqtt_connection, topic, message):
     """Publish a message to a topic"""
     # Publish message to server desired number of times.
     print('Begin Publish')
     data = f'{message}'
+    # todo: specify full message in json
     message = {"message" : data}
     mqtt_connection.publish(topic=topic, payload=json.dumps(message), qos=mqtt.QoS.AT_LEAST_ONCE)
     print("Published: '" + json.dumps(message) + "' to the topic: " + topic)
     print('Publish End')
 
-def subscribe(mqtt_connection, topic):
+def subscribe(mqtt_connection, topic, on_message_received=print_message_received):
     """Subscribe to a topic"""
     print(f'Subscribing to topic "{topic}"...')
     # pylint: disable=unused-variable
