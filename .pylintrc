@@ -8,6 +8,5 @@
   good-names=i
 
 # disable all to-do's for now
-# todo: deal with cyclic import
 [MESSAGES CONTROL]
-  disable=fixme,broad-exception-caught,cyclic-import
+  disable=fixme,broad-exception-caught

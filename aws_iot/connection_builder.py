@@ -5,7 +5,7 @@ import json
 from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
 from dotenv import load_dotenv
-from command_handler import print_message_received
+from command_actions import print_message_received
 
 
 # todo: callbacks

@@ -3,7 +3,7 @@
 # pylint: disable=unused-import
 
 import time as t
-from connection_builder import create_mqtt_connection, subscribe, publish, disconnect
+from connection_builder import create_mqtt_connection, subscribe, disconnect
 from command_handler import handle_command
 
 
