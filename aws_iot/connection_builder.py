@@ -6,6 +6,7 @@ from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
 from dotenv import load_dotenv
 from command_actions import print_message_received
+from pprint import pprint
 
 
 # todo: callbacks
@@ -60,16 +61,12 @@ def on_resubscribe_complete():
     """Callback for when resubscribe is complete"""
     print("Resubscribe complete")
 
-def publish(mqtt_connection, topic, message):
+def publish(mqtt_connection, topic, data):
     """Publish a message to a topic"""
     # Publish message to server desired number of times.
-    print('Begin Publish')
-    data = f'{message}'
-    # todo: specify full message in json
-    message = {"message" : data}
-    mqtt_connection.publish(topic=topic, payload=json.dumps(message), qos=mqtt.QoS.AT_LEAST_ONCE)
-    print("Published: '" + json.dumps(message) + "' to the topic: " + topic)
-    print('Publish End')
+    formatted_data = f'{data}'
+    mqtt_connection.publish(topic=topic, payload=json.dumps(formatted_data), qos=mqtt.QoS.AT_LEAST_ONCE)
+    print('Data: ' + str(formatted_data) + ' was published to: ' + topic)
 
 def subscribe(mqtt_connection, topic, on_message_received=print_message_received):
     """Subscribe to a topic"""

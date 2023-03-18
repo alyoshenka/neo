@@ -2,22 +2,20 @@
 
 import json
 import command_actions
-
-# from connection_builder import publish
-
+from connection_builder import publish
 
 
-def handle_command(topic, payload):
+def handle_command(topic, payload, mqtt_connection):
     """Parses a JSON command payload"""
-    # pylint: disable=unused-argument
     obj = json.loads(payload)
+    response_topic = obj['topic']
     action = obj['action']
     cmd = action['cmd']
     data = action['data']
-    # res = command_switch(cmd, data)
-    command_switch(cmd, data)
+    result = command_switch(cmd, data)
+    response = "Command successfully processed" if result else "Error processing command"
     # publish result
-    # publish(None, res, json.dumps({res: "Command successfully processed"}))
+    publish(mqtt_connection, response_topic, json.dumps({"res": response}))
 
 def command_switch(cmd, data):
     """Delegates command action"""
