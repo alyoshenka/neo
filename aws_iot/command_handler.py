@@ -3,7 +3,7 @@
 import json
 import command_actions
 
-from connection_builder import publish
+# from connection_builder import publish
 
 
 
@@ -14,7 +14,8 @@ def handle_command(topic, payload):
     action = obj['action']
     cmd = action['cmd']
     data = action['data']
-    res = command_switch(cmd, data)
+    # res = command_switch(cmd, data)
+    command_switch(cmd, data)
     # publish result
     # publish(None, res, json.dumps({res: "Command successfully processed"}))
 
