@@ -1,5 +1,6 @@
 """Subscribes to topic 'sub_topic', listens for 20s, then exits"""
 
+# pylint: disable=unused-import
 
 import time as t
 from connection_builder import create_mqtt_connection, subscribe, publish, disconnect
