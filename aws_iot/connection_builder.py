@@ -5,6 +5,7 @@ import json
 from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
 from dotenv import load_dotenv
+from command_actions import print_message_received
 
 
 # todo: callbacks
@@ -58,12 +59,6 @@ def on_connection_resumed():
 def on_resubscribe_complete():
     """Callback for when resubscribe is complete"""
     print("Resubscribe complete")
-
-# not sure why this takes 2 args?
-# todo: what action should this take?
-def print_message_received(topic, payload):
-    """Callback for when a message is received"""
-    print(f'Received message from topic "{topic}": {payload}; returning')
 
 def publish(mqtt_connection, topic, message):
     """Publish a message to a topic"""
