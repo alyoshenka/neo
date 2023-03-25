@@ -5,6 +5,7 @@ import command_actions
 from connection_builder import publish
 
 
+# pylint: disable=unused-argument
 def handle_command(topic, payload, mqtt_connection):
     """Parses a JSON command payload"""
     obj = json.loads(payload)

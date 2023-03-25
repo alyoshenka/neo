@@ -3,7 +3,7 @@
 # pylint: disable=unused-import
 
 import time as t
-from connection_builder import create_mqtt_connection, subscribe, disconnect
+from connection_builder import create_mqtt_connection, subscribe, publish, disconnect
 from command_handler import handle_command
 
 
@@ -14,7 +14,9 @@ COMMAND_STREAM = 'cmd/neo/neopolitan/hubble/console/req'
 def main(wait=100):
     """Main application function"""
     mqtt_connection = create_mqtt_connection()
-    subscribe(mqtt_connection, COMMAND_STREAM, on_message_received=lambda topic,payload : handle_command(topic,payload,mqtt_connection))
+    subscribe(mqtt_connection, COMMAND_STREAM,
+              on_message_received=lambda topic,payload :
+              handle_command(topic,payload,mqtt_connection))
     # publish(mqtt_connection, PUB_TOPIC, MESSAGE)
     t.sleep(wait) # Keep the connection alive for 20s
     disconnect(mqtt_connection)
