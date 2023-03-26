@@ -1,8 +1,5 @@
 """Capabilities of this program; what actions it can do"""
 
-import os
-
-import sys
 import subprocess
 
 def print_message(msg):
@@ -11,11 +8,9 @@ def print_message(msg):
 
 def run_neopixel_test():
     """Runs a program that displays a simple animation on the LED board"""
-    # os.system('neopixeltest')
-    # subprocess.call('neopixeltest')
     print('Recieved "neopixeltest" command')
-    sp = subprocess.Popen(["/bin/bash", "-i", "-c", 'neopixeltest'])
-    sp.communicate()
+    with subprocess.Popen(["/bin/bash", "-i", "-c", 'neopixeltest']) as sub:
+        sub.communicate()
 
 # not sure why this takes 2 args?
 # todo: what action should this take?

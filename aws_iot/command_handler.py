@@ -32,7 +32,7 @@ def command_switch(cmd, data):
     if cmd == 'print':
         command_actions.print_message(data)
         return True
-    elif cmd == 'run':
+    if cmd == 'run':
         if data == 'neopixeltest':
             command_actions.run_neopixel_test()
             return True
