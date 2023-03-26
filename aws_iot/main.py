@@ -11,7 +11,7 @@ PUB_TOPIC = 'test' # Topic to publish to
 MESSAGE = 'hello!' # message to send
 COMMAND_STREAM = 'cmd/neo/neopolitan/hubble/console/req'
 
-def main(wait=100):
+def main(wait=10):
     """Main application function"""
     mqtt_connection = create_mqtt_connection()
     subscribe(mqtt_connection, COMMAND_STREAM,
