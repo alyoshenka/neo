@@ -72,14 +72,13 @@ def publish(mqtt_connection, topic, data):
 
 def subscribe(mqtt_connection, topic, on_message_received=print_message_received):
     """Subscribe to a topic"""
-    print(f'Subscribing to topic "{topic}"...')
     # pylint: disable=unused-variable
     subscribe_future, packet_id = mqtt_connection.subscribe(
         topic=topic,
         qos=mqtt.QoS.AT_LEAST_ONCE,
         callback=on_message_received)
     subscribe_result = subscribe_future.result()
-    pprint(f'Subscribed with: {(subscribe_result["qos"])}')
+    print(f'Subscribed to: {topic}')
 
 def disconnect(mqtt_connection):
     """Disconnect"""
