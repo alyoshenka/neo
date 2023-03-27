@@ -12,6 +12,8 @@ def main(wait=10):
     mqtt_connection = create_mqtt_connection()
     initialize_subscriptions(mqtt_connection)
     # todo: make continuously listen
+    while True:
+        t.sleep(0.5)
     t.sleep(wait) # Keep the connection alive for 10s
     disconnect(mqtt_connection)
 

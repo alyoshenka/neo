@@ -3,26 +3,22 @@
 import json
 import command_actions
 from connection_builder import publish
-from const import DATA_STREAM,COMMAND_STREAM
+from const import OPERATIONS,DATA_OPERATIONS,REQ_DATA_OPERATIONS,COMMAND_STREAM
 
 # todo: this is stupid, we already separated by topic
 def handle_subscription(topic, payload, mqtt_connection):
     """Delegates in incoming subscription"""
     obj = json.loads(payload)
     response = None
-    if topic == DATA_STREAM:
-        response,response_topic = parse_data(obj)
+    if topic == REQ_DATA_OPERATIONS:
+        response = json.dumps({"res": OPERATIONS})
+        response_topic = DATA_OPERATIONS
     elif topic == COMMAND_STREAM:
         response,response_topic = parse_command(obj)
     else:
         print(f'Unrecognized topic: {topic}')
         return 
-    publish(mqtt_connection, response_topic, json.dumps({"res": response}))
-
-
-def parse_data(obj):
-    """Parses a JSON data payload"""
-    response_topic = obj['topic']
+    publish(mqtt_connection, response_topic, response)
 
 # todo: redesign to be more like AWS doc
 def data_switch(dt):
@@ -36,8 +32,9 @@ def parse_command(obj):
     cmd = action['cmd']
     data = action['data']
     result = command_switch(cmd, data)
-    response = "Command successfully processed" if result else "Error processing command"
-    return response,response_topic 
+    response = f'{result} command successfully processed' if result \
+        else f'Error processing {result}command'
+    return json.dumps(response),response_topic
 
 def command_switch(cmd, data):
     """Delegates command action"""
@@ -52,10 +49,10 @@ def command_switch(cmd, data):
 
     if cmd == 'print':
         command_actions.print_message(data)
-        return True
+        return f'print {data}'
     if cmd == 'run':
         if data == 'neopixeltest':
             command_actions.run_neopixel_test()
-            return True
+            return 'run neopixeltest'
     print('Unknown action:', cmd)
-    return False
+    return str(cmd)
