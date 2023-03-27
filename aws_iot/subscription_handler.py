@@ -17,13 +17,15 @@ def handle_subscription(topic, payload, mqtt_connection):
         response,response_topic = parse_command(obj)
     else:
         print(f'Unrecognized topic: {topic}')
-        return 
+        return
     publish(mqtt_connection, response_topic, response)
 
 # todo: redesign to be more like AWS doc
-def data_switch(dt):
+# pylint: disable=unused-argument
+def data_switch(data):
+    """Deal with data commands"""
+    # pylint: disable=unnecessary-pass
     pass
-    
 
 def parse_command(obj):
     """Parses a JSON command payload"""

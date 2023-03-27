@@ -1,4 +1,6 @@
 """Setup functions"""
+# pylint: disable=wildcard-import
+# pylint: disable=unused-wildcard-import
 from const import *
 from subscription_handler import handle_subscription
 from connection_builder import subscribe
