@@ -15,7 +15,7 @@ def main(wait=10):
     # todo: make continuously listen
     while True:
         t.sleep(0.5)
-    t.sleep(wait) # Keep the connection alive for 10s
+    t.sleep(wait) # Keep the connection alive
     disconnect(mqtt_connection)
 
 if __name__ == '__main__':

@@ -72,6 +72,7 @@ def publish(mqtt_connection, topic, data):
 
 def subscribe(mqtt_connection, topic, on_message_received=print_message_received):
     """Subscribe to a topic"""
+    assert mqtt_connection is not None, 'mqtt connection must be initialized'
     # pylint: disable=unused-variable
     subscribe_future, packet_id = mqtt_connection.subscribe(
         topic=topic,
