@@ -16,7 +16,8 @@ def create_mqtt_connection():
     # Load secrets
     load_dotenv()
     try:
-        client_id   = os.environ['CLIENT_ID']
+        # client_id   = os.environ['CLIENT_ID']
+        client_id = 'Krib'
         endpoint    = os.environ['ENDPOINT']
         # convert to bytes
         cert    = str.encode(os.environ['CERT_PEM'])
