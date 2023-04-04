@@ -14,14 +14,14 @@ def create_mqtt_connection():
     """Initializes the connection to AWS"""
 
     # Load secrets
-    client_id = 'Hubble'
     load_dotenv()
     try:
-        endpoint = os.environ['ENDPOINT']
+        client_id   = os.environ['CLIENT_ID']
+        endpoint    = os.environ['ENDPOINT']
         # convert to bytes
-        cert =     str.encode(os.environ['HUBBLE_CERT_PEM'])
-        key =      str.encode(os.environ['HUBBLE_PRIVATE_KEY'])
-        root_ca =  str.encode(os.environ['ROOT_CA_CRT'])
+        cert    = str.encode(os.environ['CERT_PEM'])
+        key     = str.encode(os.environ['PRIVATE_KEY'])
+        root_ca = str.encode(os.environ['ROOT_CA_CRT'])
     except Exception as err:
         print('error loading env vars:', err)
         return None

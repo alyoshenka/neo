@@ -10,6 +10,7 @@ from setup import initialize_subscriptions
 def main(wait=10):
     """Main application function"""
     mqtt_connection = create_mqtt_connection()
+    assert mqtt_connection is not None
     initialize_subscriptions(mqtt_connection)
     # todo: make continuously listen
     while True:
