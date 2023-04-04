@@ -20,8 +20,8 @@ def create_mqtt_connection():
         client_id = 'Krib'
         endpoint    = os.environ['ENDPOINT']
         # convert to bytes
-        cert    = str.encode(os.environ['CERT_PEM'])
-        key     = str.encode(os.environ['PRIVATE_KEY'])
+        cert    = str.encode(os.environ['HUBBLE_CERT_PEM']) # todo: change
+        key     = str.encode(os.environ['HUBBLE_PRIVATE_KEY']) # todo: change
         root_ca = str.encode(os.environ['ROOT_CA_CRT'])
     except Exception as err:
         print('error loading env vars:', err)
