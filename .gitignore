@@ -1,5 +1,14 @@
 */aws_iot_device_sdk*
+*/aws-iot-device-sdk*
 .env
+/aws_iot/secret_start.sh
+*.public.*
+*.cert.*
+*.private.*
+*.pem
+*.key
+*.crt
+*-Policy
 
 # --- Github Python .gitignore
 
