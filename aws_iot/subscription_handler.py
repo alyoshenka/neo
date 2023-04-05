@@ -52,10 +52,10 @@ def command_switch(cmd, data):
     if cmd == 'print':
         command_actions.print_message(data)
         return f'print {data}'
-    elif cmd == 'run':
+    if cmd == 'run':
         if data == 'neopixeltest':
             return command_actions.run_neopixel_test()
-    elif cmd == 'say':
+    if cmd == 'say':
         cmd = f'echo {data}'
         return command_actions.run_in_terminal(cmd)
     print('Unknown action:', cmd)
