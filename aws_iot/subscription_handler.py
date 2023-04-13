@@ -3,7 +3,7 @@
 import json
 import command_actions
 from connection_builder import publish
-from const import OPERATIONS,DATA_OPERATIONS,REQ_DATA_OPERATIONS,COMMAND_STREAM
+from const import OPERATIONS,RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,COMMAND_STREAM
 
 # todo: this is stupid, we already separated by topic
 def handle_subscription(topic, payload, mqtt_connection):
@@ -12,7 +12,7 @@ def handle_subscription(topic, payload, mqtt_connection):
     response = None
     if topic == REQ_DATA_OPERATIONS:
         response = json.dumps({"res": OPERATIONS})
-        response_topic = DATA_OPERATIONS
+        response_topic = RES_DATA_OPERATIONS
     elif topic == COMMAND_STREAM:
         response,response_topic = parse_command(obj)
     else:
