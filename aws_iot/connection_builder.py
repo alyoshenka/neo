@@ -17,12 +17,12 @@ def create_mqtt_connection():
     # Load secrets
     load_dotenv()
     try:
-        # client_id   = os.environ['CLIENT_ID']
         client_id   = os.environ['CLIENT_ID']
+        print('client id:', client_id)
         endpoint    = os.environ['ENDPOINT']
         # convert to bytes
-        cert    = str.encode(os.environ['CERT_PEM']) # todo: change
-        key     = str.encode(os.environ['PRIVATE_KEY']) # todo: change
+        cert    = str.encode(os.environ['CERT_PEM'])
+        key     = str.encode(os.environ['PRIVATE_KEY'])
         root_ca = str.encode(os.environ['ROOT_CA_CRT'])
     except Exception as err:
         print('error loading env vars:', err)
