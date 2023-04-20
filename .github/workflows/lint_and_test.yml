@@ -14,9 +14,10 @@ jobs:
       matrix:
         python-version: ["3.7"]
     env:
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
       ENDPOINT: ${{ secrets.ENDPOINT }}
-      HUBBLE_CERT_PEM: ${{ secrets.HUBBLE_CERT_PEM }}
-      HUBBLE_PRIVATE_KEY: ${{ secrets.HUBBLE_PRIVATE_KEY }}
+      HUBBLE_CERT_PEM: ${{ secrets.CERT_PEM }}
+      HUBBLE_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
       ROOT_CA_CRT: ${{ secrets.ROOT_CA_CRT }}
     steps:
     - uses: actions/checkout@v3
