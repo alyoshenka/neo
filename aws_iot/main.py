@@ -7,7 +7,7 @@ from connection_builder import create_mqtt_connection, disconnect
 from setup import initialize_subscriptions
 
 
-def main(wait=10):
+def main(wait=100):
     """Main application function"""
     mqtt_connection = create_mqtt_connection()
     initialize_subscriptions(mqtt_connection)

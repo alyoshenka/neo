@@ -4,6 +4,7 @@
 # DATA_STREAM = 'dt/neo/req' # still not what we want
 DATA_OPERATIONS = 'dt/neo/operations'
 REQ_DATA_OPERATIONS = DATA_OPERATIONS + '/req'
+RES_DATA_OPERATIONS = DATA_OPERATIONS + '/res'
 # Command listener
 COMMAND_STREAM = 'cmd/neo/req'
 
