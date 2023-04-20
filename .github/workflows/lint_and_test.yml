@@ -16,8 +16,8 @@ jobs:
     env:
       CLIENT_ID: ${{ secrets.CLIENT_ID }}
       ENDPOINT: ${{ secrets.ENDPOINT }}
-      HUBBLE_CERT_PEM: ${{ secrets.CERT_PEM }}
-      HUBBLE_PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+      CERT_PEM: ${{ secrets.CERT_PEM }}
+      PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
       ROOT_CA_CRT: ${{ secrets.ROOT_CA_CRT }}
     steps:
     - uses: actions/checkout@v3
