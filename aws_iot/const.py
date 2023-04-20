@@ -2,11 +2,11 @@
 
 # Data listener
 # DATA_STREAM = 'dt/neo/req' # still not what we want
-DATA_OPERATIONS = 'dt/neo/operations'
+DATA_OPERATIONS = 'dt/neo/operations/hubble'
 REQ_DATA_OPERATIONS = DATA_OPERATIONS + '/req'
 RES_DATA_OPERATIONS = DATA_OPERATIONS + '/res'
 # Command listener
-COMMAND_STREAM = 'cmd/neo/req'
+COMMAND_STREAM = 'cmd/neo/hubble/req'
 
 # Things this program can be told to do
 OPERATIONS = [

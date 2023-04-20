@@ -3,6 +3,7 @@
 import os
 import json
 from pprint import pprint
+# pylint: disable=import-error
 from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
 from dotenv import load_dotenv
@@ -14,14 +15,15 @@ def create_mqtt_connection():
     """Initializes the connection to AWS"""
 
     # Load secrets
-    client_id = 'Hubble'
     load_dotenv()
     try:
-        endpoint = os.environ['ENDPOINT']
+        # client_id   = os.environ['CLIENT_ID']
+        client_id = 'Krib'
+        endpoint    = os.environ['ENDPOINT']
         # convert to bytes
-        cert =     str.encode(os.environ['HUBBLE_CERT_PEM'])
-        key =      str.encode(os.environ['HUBBLE_PRIVATE_KEY'])
-        root_ca =  str.encode(os.environ['ROOT_CA_CRT'])
+        cert    = str.encode(os.environ['HUBBLE_CERT_PEM']) # todo: change
+        key     = str.encode(os.environ['HUBBLE_PRIVATE_KEY']) # todo: change
+        root_ca = str.encode(os.environ['ROOT_CA_CRT'])
     except Exception as err:
         print('error loading env vars:', err)
         return None
@@ -72,6 +74,7 @@ def publish(mqtt_connection, topic, data):
 
 def subscribe(mqtt_connection, topic, on_message_received=print_message_received):
     """Subscribe to a topic"""
+    assert mqtt_connection is not None, 'mqtt connection must be initialized'
     # pylint: disable=unused-variable
     subscribe_future, packet_id = mqtt_connection.subscribe(
         topic=topic,

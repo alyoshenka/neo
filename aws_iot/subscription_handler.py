@@ -54,7 +54,9 @@ def command_switch(cmd, data):
         return f'print {data}'
     if cmd == 'run':
         if data == 'neopixeltest':
-            command_actions.run_neopixel_test()
-            return 'run neopixeltest'
+            return command_actions.run_neopixel_test()
+    if cmd == 'say':
+        cmd = f'echo {data}'
+        return command_actions.run_in_terminal(cmd)
     print('Unknown action:', cmd)
     return str(cmd)
