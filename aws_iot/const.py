@@ -10,7 +10,19 @@ COMMAND_STREAM = 'cmd/neo/hubble/req'
 
 # Things this program can be told to do
 OPERATIONS = [
-    { 'cmd': 'run', 'data': 'neopixeltest' }, # todo: make simpler?
-    { 'cmd': 'run', 'data': 'other-thing' },
-    { 'cmd': 'print', 'data': 'hello from AWS'}
+    {
+        'cmd': 'run', 
+        'data': 'neopixeltest', 
+        'friendlyName': 'Run Neopixeltest' 
+    }, # todo: make simpler?
+    {
+        'cmd': 'run', 
+        'data': 'other-thing', 
+        'friendlyName': 'Run "other-thing"' 
+    },
+    {
+        'cmd': 'print', 
+        'data': 'hello', 
+        'friendlyName': 'Print "hello"' 
+    }
 ]
