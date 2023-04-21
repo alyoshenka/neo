@@ -8,6 +8,7 @@ from const import OPERATIONS,RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,COMMAND_STR
 # todo: this is stupid, we already separated by topic
 def handle_subscription(topic, payload, mqtt_connection):
     """Delegates in incoming subscription"""
+    print('subscription:', topic)
     obj = json.loads(payload)
     response = None
     if topic == REQ_DATA_OPERATIONS:
