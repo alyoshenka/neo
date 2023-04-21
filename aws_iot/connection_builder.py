@@ -40,6 +40,7 @@ def create_mqtt_connection():
         client_id=client_id,
         clean_session=False,
         keep_alive_secs=6)
+    assert mqtt_connection is not None, 'MQTT connection not initialized'
 
     print(f'Connecting to {endpoint} with client ID: "{client_id}"...')
     # Make the connect() call
