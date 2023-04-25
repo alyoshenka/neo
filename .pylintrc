@@ -1,6 +1,6 @@
 # Fixes import errors
 [MASTER]
-  init-hook='import sys; sys.path.append("aws_iot/"); sys.path.append("tests/")'
+  init-hook='import sys; sys.path.append("neo/"); sys.path.append("tests/")'
   ignore=old_examples,aws-iot-device-sdk,aws_iot_device_sdk_python_v2,aws-iot-device-sdk-python-v2
 
 # It’s OK to name a loop variable "i"

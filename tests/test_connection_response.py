@@ -3,7 +3,7 @@
 # todo: abstract json usage into utils file
 import json
 import time
-from aws_iot.connection_builder import \
+from neo.connection_builder import \
     create_mqtt_connection, disconnect, publish, subscribe
 
 HAS_RECEIVED = False

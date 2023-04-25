@@ -6,4 +6,4 @@ echo $(pylint --version)
 echo 
 
 # Add more modules when necessary
-pylint aws_iot/ tests/
+pylint neo/ tests/
