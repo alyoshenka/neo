@@ -1,3 +1,6 @@
 [submodule "neo/aws-iot-device-sdk"]
 	path = neo/aws-iot-device-sdk
 	url = https://github.com/aws/aws-iot-device-sdk-python-v2
+[submodule "neo/neopolitan"]
+	path = neo/neopolitan
+	url = https://github.com/alyoshenka/neopolitan

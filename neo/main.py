@@ -4,7 +4,7 @@
 
 import time as t
 from connection_builder import create_mqtt_connection, disconnect
-from setup import initialize_subscriptions, initial_publish
+from initialize import initialize_subscriptions, initial_publish
 
 
 def main(wait=100):
