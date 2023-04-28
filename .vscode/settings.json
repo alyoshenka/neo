@@ -1,7 +1,6 @@
 {
     "python.analysis.extraPaths": [
-        "./neo/aws-iot-device-sdk-python-v2/samples",
-        "./neo/neopolitan/neopolitan"
+        "./neo/aws-iot-device-sdk-python-v2/samples"
     ],
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true
