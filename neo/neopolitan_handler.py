@@ -8,6 +8,7 @@ See testboardrunner.py for an example:
 
 from threading import Thread
 from queue import Queue
+import time
 from neopolitan.neop import main as neop
 
 # todo: is global var ok?
@@ -41,3 +42,15 @@ def update_display():
 
 def test_display():
     """Test that events can be passed"""
+    def wait_then_add(slp, evt):
+        """Sleep for time then add argument to queue"""
+        time.sleep(slp)
+        EVENT_QUEUE.put(evt)
+    def wait_then_do(slp, func):
+        """Sleep for time then run function"""
+        time.sleep(slp)
+        func()
+
+    open_display()
+    Thread(target=wait_then_add, args=(5, 'speed fast')).start()
+    Thread(target=wait_then_do, args=(10, close_display)).start()

@@ -3,7 +3,7 @@
 
 import subprocess
 
-from neopolitan_handler import open_display, close_display
+from neopolitan_handler import test_display
 
 def print_message(msg):
     """Print a message to the console"""
@@ -13,8 +13,7 @@ def run_neopixel_test():
     """Runs a program that displays a simple animation on the LED board"""
     # print('Recieved "neopixeltest" command')
     try:
-        open_display()
-        close_display()
+        test_display()
     # pylint: disable=bare-except
     except:
         print('Could not open neopolitan display')
