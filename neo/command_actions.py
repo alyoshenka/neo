@@ -1,6 +1,9 @@
 """Capabilities of this program; what actions it can do"""
+# todo: better explanation^
 
 import subprocess
+
+from neopolitan_handler import open_display, close_display
 
 def print_message(msg):
     """Print a message to the console"""
@@ -10,10 +13,11 @@ def run_neopixel_test():
     """Runs a program that displays a simple animation on the LED board"""
     # print('Recieved "neopixeltest" command')
     try:
-        with subprocess.check_output(['/bin/bash', '-c', "neopixeltest"]) as sub: # run()?
-            sub.communicate()
-    except subprocess.CalledProcessError as err:
-        return f'"neopixel" command error: {err}'
+        open_display()
+        close_display()
+    # pylint: disable=bare-except
+    except:
+        print('Could not open neopolitan display')
     return 'command "neopixeltest" successfuly processed'
 
 def run_in_terminal(cmd):
