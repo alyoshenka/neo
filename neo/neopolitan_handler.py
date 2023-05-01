@@ -52,5 +52,5 @@ def test_display():
         func()
 
     open_display()
-    Thread(target=wait_then_add, args=(5, 'speed fast')).start()
+    Thread(target=wait_then_add, args=(5, 'say beepboop')).start()
     Thread(target=wait_then_do, args=(10, close_display)).start()
