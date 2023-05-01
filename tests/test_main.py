@@ -1,6 +1,6 @@
 """Tests for main module"""
 
-from aws_iot.main import main as app
+from neo.main import main as app
 
 def test_main():
     """Tests that main() runs without errors"""

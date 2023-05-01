@@ -1,7 +1,7 @@
 */aws_iot_device_sdk*
 */aws-iot-device-sdk*
 .env
-/aws_iot/secret_start.sh
+secret_start.sh
 *.public.*
 *.cert.*
 *.private.*
