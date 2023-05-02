@@ -35,4 +35,4 @@ def run_in_terminal(cmd):
 # todo: wrong place?
 def log_message_received(topic, payload):
     """Callback for when a message is received"""
-    logging.info(f'Received message from topic "{topic}": {payload}')
+    logging.info('Received message from topic "%s": %s', topic, payload)
