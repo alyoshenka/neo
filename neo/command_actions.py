@@ -2,7 +2,7 @@
 # todo: better explanation^
 
 import subprocess
-
+import logging
 from neopolitan_handler import test_display
 
 def print_message(msg):
@@ -16,8 +16,9 @@ def run_neopixel_test():
         test_display()
     # pylint: disable=bare-except
     except:
-        print('Could not open neopolitan display')
-    return 'command "neopixeltest" successfuly processed'
+        logging.warning('Could not open neopolitan display')
+        return 'Could not open neopolitan display'
+    return 'neopolitan test successfuly run'
 
 def run_in_terminal(cmd):
     """Runs a command in a command line environment"""
@@ -32,6 +33,6 @@ def run_in_terminal(cmd):
 # not sure why this takes 2 args?
 # todo: what action should this take?
 # todo: wrong place?
-def print_message_received(topic, payload):
+def log_message_received(topic, payload):
     """Callback for when a message is received"""
-    print(f'Received message from topic "{topic}": {payload}; returning')
+    logging.info(f'Received message from topic "{topic}": {payload}')

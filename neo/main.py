@@ -3,12 +3,20 @@
 # pylint: disable=unused-import
 
 import time as t
+import logging
+import datetime
 from connection_builder import create_mqtt_connection, disconnect
 from initialize import initialize_subscriptions, initial_publish
 
+def initialize_logger():
+    """Set up the log file"""
+    filename = 'logs/' + str(datetime.datetime.now()) + '.txt'
+    logging.basicConfig(filename=filename, encoding='utf=8', level=logging.DEBUG)
 
 def main(wait=100):
     """Main application function"""
+    initialize_logger()
+
     mqtt_connection = create_mqtt_connection()
     assert mqtt_connection is not None
     initialize_subscriptions(mqtt_connection)

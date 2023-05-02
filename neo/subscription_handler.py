@@ -1,6 +1,7 @@
 """Directs actions based on command prompt from an MQTT topic"""
 
 import json
+import logging
 import command_actions
 from neopolitan_handler import command_map as neop_command
 from connection_builder import publish
@@ -9,7 +10,7 @@ from const import OPERATIONS,RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,COMMAND_STR
 # todo: this is stupid, we already separated by topic
 def handle_subscription(topic, payload, mqtt_connection):
     """Delegates in incoming subscription"""
-    print('subscription:', topic)
+    logging.info(f'subscription: {topic}')
     obj = json.loads(payload)
     response = None
     if topic == REQ_DATA_OPERATIONS:
@@ -18,7 +19,7 @@ def handle_subscription(topic, payload, mqtt_connection):
     elif topic == COMMAND_STREAM:
         response,response_topic = parse_command(obj)
     else:
-        print(f'Unrecognized topic: {topic}')
+        logging.warning(f'Unrecognized topic: {topic}')
         return
     publish(mqtt_connection, response_topic, response)
 
@@ -64,5 +65,5 @@ def command_switch(cmd, data):
     if cmd == 'say':
         cmd = f'echo {data}'
         return command_actions.run_in_terminal(cmd)
-    print('Unknown action:', cmd)
+    logging.warning(f'Unknown action: {cmd}')
     return str(cmd)

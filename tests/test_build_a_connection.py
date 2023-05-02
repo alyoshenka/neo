@@ -7,7 +7,7 @@ def test_build_connection():
     try:
         mqtt_connection = create_mqtt_connection()
     except Exception as err:
-        print(err)
+        logging.error(err)
         assert False
     disconnect(mqtt_connection)
     

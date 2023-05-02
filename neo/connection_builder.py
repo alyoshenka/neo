@@ -2,12 +2,12 @@
 
 import os
 import json
-from pprint import pprint
+import logging
 # pylint: disable=import-error
 from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
 from dotenv import load_dotenv
-from command_actions import print_message_received
+from command_actions import log_message_received
 
 
 # todo: callbacks
@@ -24,7 +24,7 @@ def create_mqtt_connection():
         key     = str.encode(os.environ['PRIVATE_KEY'])
         root_ca = str.encode(os.environ['ROOT_CA_CRT'])
     except Exception as err:
-        print('error loading env vars:', err)
+        logging.error('error loading env vars: {err}')
         return None
 
     # Spin up resources
@@ -42,12 +42,12 @@ def create_mqtt_connection():
         keep_alive_secs=6)
     assert mqtt_connection is not None, 'MQTT connection not initialized'
 
-    print(f'Connecting to {endpoint} with client ID: "{client_id}"...')
+    logging.info(f'Connecting to {endpoint} with client ID: "{client_id}"...')
     # Make the connect() call
     connect_future = mqtt_connection.connect()
     # Future.result() waits until a result is available
     connect_future.result()
-    print("Connected!")
+    logging.info("Connected!")
 
     return mqtt_connection
 
@@ -70,9 +70,9 @@ def publish(mqtt_connection, topic, data):
     mqtt_connection.publish(topic=topic,
                             payload=json.dumps(formatted_data),
                             qos=mqtt.QoS.AT_LEAST_ONCE)
-    pprint('Data: ' + str(formatted_data) + ' was published to: ' + topic)
+    logging.info('Data: ' + str(formatted_data) + ' was published to: ' + topic)
 
-def subscribe(mqtt_connection, topic, on_message_received=print_message_received):
+def subscribe(mqtt_connection, topic, on_message_received=log_message_received):
     """Subscribe to a topic"""
     assert mqtt_connection is not None, 'mqtt connection must be initialized'
     # pylint: disable=unused-variable
@@ -81,10 +81,10 @@ def subscribe(mqtt_connection, topic, on_message_received=print_message_received
         qos=mqtt.QoS.AT_LEAST_ONCE,
         callback=on_message_received)
     subscribe_result = subscribe_future.result()
-    print(f'Subscribed to: {topic}')
+    logging.info(f'Subscribed to: {topic}')
 
 def disconnect(mqtt_connection):
     """Disconnect"""
     disconnect_future = mqtt_connection.disconnect()
     disconnect_future.result()
-    print("Disconnected")
+    logging.info("Disconnected")

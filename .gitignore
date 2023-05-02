@@ -1,3 +1,5 @@
+logs/*
+
 */aws_iot_device_sdk*
 */aws-iot-device-sdk*
 .env

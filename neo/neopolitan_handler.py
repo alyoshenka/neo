@@ -9,6 +9,7 @@ See testboardrunner.py for an example:
 from threading import Thread
 from queue import Queue
 import time
+import logging
 from neopolitan.neop import main as neop
 
 # todo: is global var ok?
@@ -25,7 +26,7 @@ def command_map(data):
         return update_display
     if data == 'test':
         return test_display
-    print(f'No Neopolitan action found for: {data}')
+    logging.warning(f'No Neopolitan action found for: {data}')
     return None
 
 def open_display():
