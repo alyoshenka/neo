@@ -2,6 +2,7 @@
 
 import json
 import command_actions
+from neopolitan_handler import command_map as neop_command
 from connection_builder import publish
 from const import OPERATIONS,RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,COMMAND_STREAM
 
@@ -36,7 +37,7 @@ def parse_command(obj):
     data = action['data']
     result = command_switch(cmd, data)
     response = f'{result} command successfully processed' if result \
-        else f'Error processing {result}command'
+        else f'Error processing {result} command'
     return json.dumps(response),response_topic
 
 def command_switch(cmd, data):
@@ -53,9 +54,13 @@ def command_switch(cmd, data):
     if cmd == 'print':
         command_actions.print_message(data)
         return f'print {data}'
-    if cmd == 'run':
-        if data == 'neopixeltest':
-            return command_actions.run_neopixel_test()
+    if cmd == 'neopolitan':
+        neop_func = neop_command(data)
+        if neop_func:
+            neop_func()
+            return f'Neopolitan[{data}] successfully sent'    
+        else:
+            return f'Error sending Neopolitan[{data}]'
     if cmd == 'say':
         cmd = f'echo {data}'
         return command_actions.run_in_terminal(cmd)

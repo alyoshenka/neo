@@ -15,6 +15,19 @@ from neopolitan.neop import main as neop
 NEOPOLITAN_THREAD = None
 EVENT_QUEUE = None
 
+def command_map(data):
+    """Returns the appropriate function"""
+    if data == 'open':
+        return open_display
+    if data == 'close':
+        return close_display
+    if data == 'update':
+        return update_display
+    if data == 'test':
+        return test_display
+    print(f'No Neopolitan action found for: {data}')
+    return None
+
 def open_display():
     """Open the neopolitan display. Should be blank"""
     # todo: only open if not open else error
