@@ -32,7 +32,7 @@ jobs:
         pip install pytest
         python -m pip install python-dotenv
         git submodule update --init --recursive
-        if [ -f neo/requirements.txt ]; then pip install -r neo/requirements.txt; fi
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Analysing the code with pylint
       run: |
         pylint neo/ tests/
