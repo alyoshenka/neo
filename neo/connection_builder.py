@@ -24,7 +24,7 @@ def create_mqtt_connection():
         key     = str.encode(os.environ['PRIVATE_KEY'])
         root_ca = str.encode(os.environ['ROOT_CA_CRT'])
     except Exception as err:
-        logging.error('error loading env vars: {err}')
+        logging.error('error loading env vars: %s', err)
         return None
 
     # Spin up resources
@@ -42,7 +42,7 @@ def create_mqtt_connection():
         keep_alive_secs=6)
     assert mqtt_connection is not None, 'MQTT connection not initialized'
 
-    logging.info(f'Connecting to {endpoint} with client ID: "{client_id}"...')
+    logging.info('Connecting to %s with client ID: "%s"...', endpoint, client_id)
     # Make the connect() call
     connect_future = mqtt_connection.connect()
     # Future.result() waits until a result is available
@@ -70,7 +70,7 @@ def publish(mqtt_connection, topic, data):
     mqtt_connection.publish(topic=topic,
                             payload=json.dumps(formatted_data),
                             qos=mqtt.QoS.AT_LEAST_ONCE)
-    logging.info('Data: ' + str(formatted_data) + ' was published to: ' + topic)
+    logging.info('Data: %s was published to: %s', formatted_data, topic)
 
 def subscribe(mqtt_connection, topic, on_message_received=log_message_received):
     """Subscribe to a topic"""
@@ -81,7 +81,7 @@ def subscribe(mqtt_connection, topic, on_message_received=log_message_received):
         qos=mqtt.QoS.AT_LEAST_ONCE,
         callback=on_message_received)
     subscribe_result = subscribe_future.result()
-    logging.info(f'Subscribed to: {topic}')
+    logging.info('Subscribed to: %s', topic)
 
 def disconnect(mqtt_connection):
     """Disconnect"""

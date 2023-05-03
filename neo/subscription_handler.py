@@ -10,7 +10,7 @@ from const import OPERATIONS,RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,COMMAND_STR
 # todo: this is stupid, we already separated by topic
 def handle_subscription(topic, payload, mqtt_connection):
     """Delegates in incoming subscription"""
-    logging.info(f'subscription: {topic}')
+    logging.info('subscription: %s', topic)
     obj = json.loads(payload)
     response = None
     if topic == REQ_DATA_OPERATIONS:
@@ -19,7 +19,7 @@ def handle_subscription(topic, payload, mqtt_connection):
     elif topic == COMMAND_STREAM:
         response,response_topic = parse_command(obj)
     else:
-        logging.warning(f'Unrecognized topic: {topic}')
+        logging.warning('Unrecognized topic: %s', topic)
         return
     publish(mqtt_connection, response_topic, response)
 
@@ -38,12 +38,12 @@ def parse_command(obj):
         cmd = action['cmd']
         data = action['data']
         options = None
-    except:
-        print(f'Could not parse obj: {obj}')
+    except Exception as err:
+        logging.warning('Could not parse obj: %s - %s', obj, err)
     try:
         options = action['options']
-    except:
-        logging.warning('No options value')
+    except Exception as err:
+        logging.warning('No options value - %s', err)
     result = command_switch(cmd, data, options)
     response = f'{result} command successfully processed' if result \
         else f'Error processing {result} command'
@@ -67,12 +67,14 @@ def command_switch(cmd, data, options=None):
         neop_func = neop_command(data)
         if neop_func:
             # todo: is this bad?
-            neop_func(options) if options is not None else neop_func()
+            if options is not None:
+                neop_func(options)
+            else:
+                neop_func()
             return f'Neopolitan[{data}] successfully sent'
-        else:
-            return f'Error sending Neopolitan[{data}]'
+        return f'Error sending Neopolitan[{data}]'
     if cmd == 'say':
         cmd = f'echo {data}'
         return command_actions.run_in_terminal(cmd)
-    logging.warning(f'Unknown action: {cmd}')
+    logging.warning('Unknown action: %s', cmd)
     return str(cmd)

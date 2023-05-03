@@ -30,7 +30,7 @@ def command_map(data):
     if data == 'test':
         logging.info('Returning "neopolitan test" func')
         return test_display
-    logging.warning(f'No Neopolitan action found for: {data}')
+    logging.warning('No Neopolitan action found for: %s', data)
     return None
 
 def open_display():
@@ -72,7 +72,7 @@ def update_display(options):
 
     for opt in options:
         parse_option(opt)
-  
+
 def test_display():
     """Test that events can be passed"""
     def wait_then_add(slp, evt):
