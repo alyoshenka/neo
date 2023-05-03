@@ -10,7 +10,7 @@ from initialize import initialize_subscriptions, initial_publish
 
 def initialize_logger():
     """Set up the log file"""
-    filename = 'logs/' + str(datetime.datetime.now()) + '.txt'
+    filename = 'logs/neo_' + str(datetime.datetime.now()) + '.txt'
     logging.basicConfig(filename=filename, encoding='utf=8', level=logging.DEBUG)
 
 def main(wait=100):
