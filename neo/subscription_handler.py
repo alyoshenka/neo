@@ -1,14 +1,16 @@
 """Directs actions based on command prompt from an MQTT topic"""
 
 import json
+import logging
 import command_actions
+from neopolitan_handler import command_map as neop_command
 from connection_builder import publish
 from const import OPERATIONS,RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,COMMAND_STREAM
 
 # todo: this is stupid, we already separated by topic
 def handle_subscription(topic, payload, mqtt_connection):
     """Delegates in incoming subscription"""
-    print('subscription:', topic)
+    logging.info('subscription: %s', topic)
     obj = json.loads(payload)
     response = None
     if topic == REQ_DATA_OPERATIONS:
@@ -17,7 +19,7 @@ def handle_subscription(topic, payload, mqtt_connection):
     elif topic == COMMAND_STREAM:
         response,response_topic = parse_command(obj)
     else:
-        print(f'Unrecognized topic: {topic}')
+        logging.warning('Unrecognized topic: %s', topic)
         return
     publish(mqtt_connection, response_topic, response)
 
@@ -30,16 +32,24 @@ def data_switch(data):
 
 def parse_command(obj):
     """Parses a JSON command payload"""
-    response_topic = obj['topic']
-    action = obj['action']
-    cmd = action['cmd']
-    data = action['data']
-    result = command_switch(cmd, data)
+    try:
+        response_topic = obj['topic']
+        action = obj['action']
+        cmd = action['cmd']
+        data = action['data']
+        options = None
+    except Exception as err:
+        logging.warning('Could not parse obj: %s - %s', obj, err)
+    try:
+        options = action['options']
+    except Exception as err:
+        logging.warning('No options value - %s', err)
+    result = command_switch(cmd, data, options)
     response = f'{result} command successfully processed' if result \
-        else f'Error processing {result}command'
+        else f'Error processing {result} command'
     return json.dumps(response),response_topic
 
-def command_switch(cmd, data):
+def command_switch(cmd, data, options=None):
     """Delegates command action"""
 
     # todo: upgrade to Python 3.10 so we can use 'match'
@@ -53,11 +63,18 @@ def command_switch(cmd, data):
     if cmd == 'print':
         command_actions.print_message(data)
         return f'print {data}'
-    if cmd == 'run':
-        if data == 'neopixeltest':
-            return command_actions.run_neopixel_test()
+    if cmd == 'neopolitan':
+        neop_func = neop_command(data)
+        if neop_func:
+            # todo: is this bad?
+            if options is not None:
+                neop_func(options)
+            else:
+                neop_func()
+            return f'Neopolitan[{data}] successfully sent'
+        return f'Error sending Neopolitan[{data}]'
     if cmd == 'say':
         cmd = f'echo {data}'
         return command_actions.run_in_terminal(cmd)
-    print('Unknown action:', cmd)
+    logging.warning('Unknown action: %s', cmd)
     return str(cmd)

@@ -8,13 +8,30 @@ RES_DATA_OPERATIONS = DATA_OPERATIONS + '/res'
 # Command listener
 COMMAND_STREAM = 'cmd/neo/hubble/req'
 
+# todo: make this better
 # Things this program can be told to do
 OPERATIONS = [
     {
-        'cmd': 'run', 
-        'data': 'neopixeltest', 
-        'friendlyName': 'Run Neopixeltest' 
+        'cmd': 'neopolitan', 
+        'data': 'test', 
+        'friendlyName': 'Run Neopolitan Test' 
     }, # todo: make simpler?
+        {
+        'cmd': 'neopolitan', 
+        'data': 'open', 
+        'friendlyName': 'Open Neopolitan Display' 
+    },
+    {
+        'cmd': 'neopolitan', 
+        'data': 'close', 
+        'friendlyName': 'Close Neopolitan Display' 
+    },
+    {
+        'cmd': 'neopolitan', 
+        'data': 'update', 
+        'friendlyName': 'Update Neopolitan Display',
+        'options': ['say', 'speed', 'wrap'] # can't change graphical
+    },
     {
         'cmd': 'run', 
         'data': 'other-thing', 
