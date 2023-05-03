@@ -29,7 +29,8 @@ OPERATIONS = [
     {
         'cmd': 'neopolitan', 
         'data': 'update', 
-        'friendlyName': 'Update Neopolitan Display (not impl)' 
+        'friendlyName': 'Update Neopolitan Display',
+        'options': ['say', 'speed', 'wrap'] # can't change graphical
     },
     {
         'cmd': 'run', 

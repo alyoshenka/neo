@@ -19,12 +19,16 @@ EVENT_QUEUE = None
 def command_map(data):
     """Returns the appropriate function"""
     if data == 'open':
+        logging.info('Returning "neopolitan open" func')
         return open_display
     if data == 'close':
+        logging.info('Returning "neopolitan close" func')
         return close_display
     if data == 'update':
+        logging.info('Returning "neopolitan update" func')
         return update_display
     if data == 'test':
+        logging.info('Returning "neopolitan test" func')
         return test_display
     logging.warning(f'No Neopolitan action found for: {data}')
     return None
@@ -51,9 +55,24 @@ def close_display():
     NEOPOLITAN_THREAD = None
     EVENT_QUEUE = None
 
-def update_display():
+def update_display(options):
     """Send arguments to the display"""
 
+    def parse_option(opt):
+        """Handles a single option"""
+        value = options[opt]
+        if not value:
+            logging.warning('No value passed in %s', opt)
+            return
+        if not EVENT_QUEUE:
+            logging.warning('Event queue not initialized yet')
+            return
+        put_str = str(opt) + ' ' + str(value)
+        EVENT_QUEUE.put(put_str)
+
+    for opt in options:
+        parse_option(opt)
+  
 def test_display():
     """Test that events can be passed"""
     def wait_then_add(slp, evt):

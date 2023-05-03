@@ -32,16 +32,24 @@ def data_switch(data):
 
 def parse_command(obj):
     """Parses a JSON command payload"""
-    response_topic = obj['topic']
-    action = obj['action']
-    cmd = action['cmd']
-    data = action['data']
-    result = command_switch(cmd, data)
+    try:
+        response_topic = obj['topic']
+        action = obj['action']
+        cmd = action['cmd']
+        data = action['data']
+        options = None
+    except:
+        print(f'Could not parse obj: {obj}')
+    try:
+        options = action['options']
+    except:
+        logging.warning('No options value')
+    result = command_switch(cmd, data, options)
     response = f'{result} command successfully processed' if result \
         else f'Error processing {result} command'
     return json.dumps(response),response_topic
 
-def command_switch(cmd, data):
+def command_switch(cmd, data, options=None):
     """Delegates command action"""
 
     # todo: upgrade to Python 3.10 so we can use 'match'
@@ -58,8 +66,9 @@ def command_switch(cmd, data):
     if cmd == 'neopolitan':
         neop_func = neop_command(data)
         if neop_func:
-            neop_func()
-            return f'Neopolitan[{data}] successfully sent'    
+            # todo: is this bad?
+            neop_func(options) if options is not None else neop_func()
+            return f'Neopolitan[{data}] successfully sent'
         else:
             return f'Error sending Neopolitan[{data}]'
     if cmd == 'say':
