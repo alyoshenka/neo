@@ -34,10 +34,14 @@ def command_map(data):
     return None
 
 def open_display():
-    """Open the neopolitan display. Should be blank"""
-    # todo: only open if not open else error
+    """Open the neopolitan display. Should be blank""" # todo: initialize blank?
+    logging.info('running open_display')
+
     global NEOPOLITAN_THREAD
     global EVENT_QUEUE
+    if NEOPOLITAN_THREAD or EVENT_QUEUE:
+        logging.warning('NEOPOLITAN_THREAD or EVENT_QUEUE already initialized')
+        return
 
     EVENT_QUEUE = Queue()
     NEOPOLITAN_THREAD = Thread(target=neop, args=(EVENT_QUEUE,))
@@ -45,8 +49,14 @@ def open_display():
 
 def close_display():
     """Close the neopolitan display"""
+    logging.info('running close_display')
+
     global NEOPOLITAN_THREAD
     global EVENT_QUEUE
+
+    if not (EVENT_QUEUE and NEOPOLITAN_THREAD):
+        logging.warning('EVENT_QUEUE or NEOPOLITAN_THREAD not initialized')
+        return
 
     EVENT_QUEUE.put('exit')
 
@@ -57,6 +67,7 @@ def close_display():
 
 def update_display(options):
     """Send arguments to the display"""
+    logging.info('running update_display')
 
     def parse_option(opt):
         """Handles a single option"""
@@ -67,7 +78,9 @@ def update_display(options):
         if not EVENT_QUEUE:
             logging.warning('Event queue not initialized yet')
             return
+
         logging.info('adding to queue: %s=%s', opt, value)
+        # todo: check if string. need to?
         put_str = str(opt) + ' ' + str(value)
         EVENT_QUEUE.put(put_str)
 
@@ -76,12 +89,20 @@ def update_display(options):
 
 def test_display():
     """Test that events can be passed"""
+    logging.info('running test_display')
+
     def wait_then_add(slp, evt):
         """Sleep for time then add argument to queue"""
+        logging.info('Waiting for %s s then putting %s', slp, evt)
         time.sleep(slp)
         EVENT_QUEUE.put(evt)
     def wait_then_do(slp, func):
         """Sleep for time then run function"""
+        if not callable(func):
+            logging.warning('Passed an uncallable: %s', func)
+            return
+        logging.info('Waiting for %s s then doing %s', slp, func.__name__)
+
         time.sleep(slp)
         func()
 
