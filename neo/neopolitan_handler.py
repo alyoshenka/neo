@@ -67,6 +67,7 @@ def update_display(options):
         if not EVENT_QUEUE:
             logging.warning('Event queue not initialized yet')
             return
+        logging.info('adding to queue: %s=%s', opt, value)
         put_str = str(opt) + ' ' + str(value)
         EVENT_QUEUE.put(put_str)
 
