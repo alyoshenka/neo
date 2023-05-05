@@ -28,7 +28,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade pip
-        python -m pip install python-dotenv
+        pip install python-dotenv
         git submodule update --init --recursive
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Analyzing the code with pylint
