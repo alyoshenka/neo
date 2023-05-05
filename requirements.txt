@@ -1,6 +1,6 @@
 pylint==2.16.1
 pytest==7.2.1
-python-dotenv==1.0.0
+python-dotenv
 
 awscrt==0.16.13
 neopolitan
