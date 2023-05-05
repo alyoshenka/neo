@@ -2,7 +2,7 @@
 # todo: better explanation^
 
 import subprocess
-import logging
+from initialize_logger import logger
 from neopolitan_handler import test_display
 
 def print_message(msg):
@@ -16,7 +16,7 @@ def run_neopixel_test():
         test_display()
     # pylint: disable=bare-except
     except:
-        logging.warning('Could not open neopolitan display')
+        logger.warning('Could not open neopolitan display')
         return 'Could not open neopolitan display'
     return 'neopolitan test successfuly run'
 
@@ -35,4 +35,4 @@ def run_in_terminal(cmd):
 # todo: wrong place?
 def log_message_received(topic, payload):
     """Callback for when a message is received"""
-    logging.info('Received message from topic "%s": %s', topic, payload)
+    logger.info('Received message from topic "%s": %s', topic, payload)

@@ -2,13 +2,12 @@
 
 import os
 import json
-import logging
 # pylint: disable=import-error
 from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
 from dotenv import load_dotenv
 from command_actions import log_message_received
-
+from initialize_logger import logger
 
 # todo: callbacks
 def create_mqtt_connection():
@@ -24,7 +23,7 @@ def create_mqtt_connection():
         key     = str.encode(os.environ['PRIVATE_KEY'])
         root_ca = str.encode(os.environ['ROOT_CA_CRT'])
     except Exception as err:
-        logging.error('error loading env vars: %s', err)
+        logger.error('error loading env vars: %s', err)
         return None
 
     # Spin up resources
@@ -42,12 +41,12 @@ def create_mqtt_connection():
         keep_alive_secs=6)
     assert mqtt_connection is not None, 'MQTT connection not initialized'
 
-    logging.info('Connecting to %s with client ID: "%s"...', endpoint, client_id)
+    logger.info('Connecting to %s with client ID: "%s"...', endpoint, client_id)
     # Make the connect() call
     connect_future = mqtt_connection.connect()
     # Future.result() waits until a result is available
     connect_future.result()
-    logging.info("Connected!")
+    logger.info("Connected!")
 
     return mqtt_connection
 
@@ -70,7 +69,7 @@ def publish(mqtt_connection, topic, data):
     mqtt_connection.publish(topic=topic,
                             payload=json.dumps(formatted_data),
                             qos=mqtt.QoS.AT_LEAST_ONCE)
-    logging.info('Data: %s was published to: %s', formatted_data, topic)
+    logger.info('Data: %s was published to: %s', formatted_data, topic)
 
 def subscribe(mqtt_connection, topic, on_message_received=log_message_received):
     """Subscribe to a topic"""
@@ -81,10 +80,10 @@ def subscribe(mqtt_connection, topic, on_message_received=log_message_received):
         qos=mqtt.QoS.AT_LEAST_ONCE,
         callback=on_message_received)
     subscribe_result = subscribe_future.result()
-    logging.info('Subscribed to: %s', topic)
+    logger.info('Subscribed to: %s', topic)
 
 def disconnect(mqtt_connection):
     """Disconnect"""
     disconnect_future = mqtt_connection.disconnect()
     disconnect_future.result()
-    logging.info("Disconnected")
+    logger.info("Disconnected")

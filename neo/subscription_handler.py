@@ -1,16 +1,16 @@
 """Directs actions based on command prompt from an MQTT topic"""
 
 import json
-import logging
 import command_actions
 from neopolitan_handler import command_map as neop_command
 from connection_builder import publish
 from const import OPERATIONS,RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,COMMAND_STREAM
+from initialize_logger import logger
 
 # todo: this is stupid, we already separated by topic
 def handle_subscription(topic, payload, mqtt_connection):
     """Delegates in incoming subscription"""
-    logging.info('subscription: %s', topic)
+    logger.info('subscription: %s', topic)
     obj = json.loads(payload)
     response = None
     if topic == REQ_DATA_OPERATIONS:
@@ -19,7 +19,7 @@ def handle_subscription(topic, payload, mqtt_connection):
     elif topic == COMMAND_STREAM:
         response,response_topic = parse_command(obj)
     else:
-        logging.warning('Unrecognized topic: %s', topic)
+        logger.warning('Unrecognized topic: %s', topic)
         return
     publish(mqtt_connection, response_topic, response)
 
@@ -39,11 +39,11 @@ def parse_command(obj):
         data = action['data']
         options = None
     except Exception as err:
-        logging.warning('Could not parse obj: %s - %s', obj, err)
+        logger.warning('Could not parse obj: %s - %s', obj, err)
     try:
         options = action['options']
     except Exception as err:
-        logging.warning('No options value - %s', err)
+        logger.warning('No options value - %s', err)
     result = command_switch(cmd, data, options)
     response = f'{result} command successfully processed' if result \
         else f'Error processing {result} command'
@@ -76,5 +76,5 @@ def command_switch(cmd, data, options=None):
     if cmd == 'say':
         cmd = f'echo {data}'
         return command_actions.run_in_terminal(cmd)
-    logging.warning('Unknown action: %s', cmd)
+    logger.warning('Unknown action: %s', cmd)
     return str(cmd)
