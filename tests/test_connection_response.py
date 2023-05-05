@@ -30,6 +30,7 @@ def test_sub_then_pub():
 
     start = time.time()
     mqtt_connection = create_mqtt_connection()
+    assert mqtt_connection, 'MQTT Connection not created'
     subscribe(mqtt_connection, topic, on_message_received=get_payload)
     publish(mqtt_connection, topic, value)
     while not HAS_RECEIVED:
