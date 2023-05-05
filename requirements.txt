@@ -1,8 +1,6 @@
 pylint==2.16.1
-pytest
-python-dotenv
+pytest==7.2.1
+python-dotenv==1.0.0
 
-awscrt==0.8.0
-AWSIoTPythonSDK==1.5.2
-awsiotsdk==1.4.0
+awscrt==0.16.13
 neopolitan
