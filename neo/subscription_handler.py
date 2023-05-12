@@ -5,11 +5,12 @@ import command_actions
 from neopolitan_handler import command_map as neop_command
 from connection_builder import publish
 from const import OPERATIONS,RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,COMMAND_STREAM
-from initialize_logger import logger
+from log import get_logger
 
 # todo: this is stupid, we already separated by topic
 def handle_subscription(topic, payload, mqtt_connection):
     """Delegates in incoming subscription"""
+    logger = get_logger()
     logger.info('subscription: %s', topic)
     obj = json.loads(payload)
     response = None
@@ -32,6 +33,7 @@ def data_switch(data):
 
 def parse_command(obj):
     """Parses a JSON command payload"""
+    logger = get_logger()
     try:
         response_topic = obj['topic']
         action = obj['action']
@@ -76,5 +78,5 @@ def command_switch(cmd, data, options=None):
     if cmd == 'say':
         cmd = f'echo {data}'
         return command_actions.run_in_terminal(cmd)
-    logger.warning('Unknown action: %s', cmd)
+    get_logger().warning('Unknown action: %s', cmd)
     return str(cmd)

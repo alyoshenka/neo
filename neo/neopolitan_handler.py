@@ -10,7 +10,7 @@ from threading import Thread
 from queue import Queue
 import time
 from neopolitan.neop import main as neop
-from initialize_logger import logger
+from log import get_logger
 
 # todo: is global var ok?
 NEOPOLITAN_THREAD = None
@@ -18,6 +18,7 @@ EVENT_QUEUE = None
 
 def command_map(data):
     """Returns the appropriate function"""
+    logger = get_logger()
     if data == 'open':
         logger.info('Returning "neopolitan open" func')
         return open_display
@@ -35,6 +36,7 @@ def command_map(data):
 
 def open_display():
     """Open the neopolitan display. Should be blank""" # todo: initialize blank?
+    logger = get_logger()
     logger.info('running open_display')
 
     global NEOPOLITAN_THREAD
@@ -49,6 +51,7 @@ def open_display():
 
 def close_display():
     """Close the neopolitan display"""
+    logger = get_logger()
     logger.info('running close_display')
 
     global NEOPOLITAN_THREAD
@@ -67,6 +70,7 @@ def close_display():
 
 def update_display(options):
     """Send arguments to the display"""
+    logger = get_logger()
     logger.info('running update_display')
 
     def parse_option(opt):
@@ -89,6 +93,7 @@ def update_display(options):
 
 def test_display():
     """Test that events can be passed"""
+    logger = get_logger()
     logger.info('running test_display')
 
     def wait_then_add(slp, evt):
