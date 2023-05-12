@@ -7,11 +7,13 @@ from awscrt import io, mqtt # , auth, http
 from awsiot import mqtt_connection_builder
 from dotenv import load_dotenv
 from command_actions import log_message_received
-from initialize_logger import logger
+from log import get_logger
 
 # todo: callbacks
 def create_mqtt_connection():
     """Initializes the connection to AWS"""
+
+    logger = get_logger()
 
     # Load secrets
     load_dotenv()
@@ -69,7 +71,7 @@ def publish(mqtt_connection, topic, data):
     mqtt_connection.publish(topic=topic,
                             payload=json.dumps(formatted_data),
                             qos=mqtt.QoS.AT_LEAST_ONCE)
-    logger.info('Data: %s was published to: %s', formatted_data, topic)
+    get_logger().info('Data: %s was published to: %s', formatted_data, topic)
 
 def subscribe(mqtt_connection, topic, on_message_received=log_message_received):
     """Subscribe to a topic"""
@@ -80,10 +82,10 @@ def subscribe(mqtt_connection, topic, on_message_received=log_message_received):
         qos=mqtt.QoS.AT_LEAST_ONCE,
         callback=on_message_received)
     subscribe_result = subscribe_future.result()
-    logger.info('Subscribed to: %s', topic)
+    get_logger().info('Subscribed to: %s', topic)
 
 def disconnect(mqtt_connection):
     """Disconnect"""
     disconnect_future = mqtt_connection.disconnect()
     disconnect_future.result()
-    logger.info("Disconnected")
+    get_logger().info("Disconnected")

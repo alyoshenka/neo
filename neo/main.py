@@ -5,11 +5,12 @@
 import time as t
 from connection_builder import create_mqtt_connection, disconnect
 from initialize import initialize_subscriptions, initial_publish
-from initialize_logger import init_logger, logger
+from log import init_logger, get_logger
 
 def main(wait=100):
     """Main application function"""
     init_logger()
+    logger = get_logger()
 
     logger.info('Starting the application')
     mqtt_connection = create_mqtt_connection()
