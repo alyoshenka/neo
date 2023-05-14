@@ -13,7 +13,6 @@ def init_logger():
     if sys.version_info[:2] > (3, 7):
         logging.basicConfig(filename=filename, encoding='utf=8', level=logging.DEBUG)
     else:
-        python37 = True
         logging.basicConfig(filename=filename, level=logging.DEBUG)
 
     get_logger().info('Running with Python %s.%s', sys.version_info[0], sys.version_info[1])
