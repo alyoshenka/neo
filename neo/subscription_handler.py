@@ -13,17 +13,23 @@ def handle_command_request(topic, payload, mqtt_connection):
     assert topic == COMMAND_STREAM_REQ, \
         'This function should only receive subscriptions from `COMMAND_STREAM`'
     response,response_topic = execute_command(json.loads(payload))
-    publish(mqtt_connection, response, response_topic)
+    get_logger().info('publishing %s to %s', response, response_topic)
+    publish(mqtt_connection, response_topic, response)
 
 def handle_operation_request(topic, payload, mqtt_connection):
     """Handles a request for available operations"""
     assert topic == REQ_DATA_OPERATIONS, \
         'This function should only receive subscriptions from `REQ_DATA_OPERATIONS`'
-    get_logger().info('Data operations were requested')
+    logger = get_logger()
+    logger.info('Data operations were requested')
     response_topic = RES_DATA_OPERATIONS
-    if 'responseTopic' in payload:
-        get_logger().info('Requested with non-default response topic: %s', payload['responseTopic'])
-        response_topic = payload['responseTopic']
+    obj = json.loads(payload)
+    if obj is None:
+        logger.warning('Payload cannot be loaded into JSON: %s', payload)
+        return None
+    if 'responseTopic' in obj:
+        logger.info('Requested with non-default response topic: %s', obj['responseTopic'])
+        response_topic = obj['responseTopic']
     publish(mqtt_connection, response_topic, json.dumps({"availableOperations": OPERATIONS}))
 
 # todo: redesign to be more like AWS doc
@@ -44,7 +50,7 @@ def execute_command(obj):
         response_topic = COMMAND_STREAM_RES
     result = command_switch(obj)
     response = f'{result} command successfully processed' if result \
-        else f'Error processing {result} command'
+        else None
     return json.dumps(response),response_topic
 
 def command_switch(obj):

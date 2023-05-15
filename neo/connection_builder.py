@@ -64,10 +64,10 @@ def on_resubscribe_complete():
     """Callback for when resubscribe is complete"""
     print("Resubscribe complete")
 
-def publish(mqtt_connection, topic, data):
+def publish(mqtt_connection, topic, payload):
     """Publish a message to a topic"""
     # Publish message to server desired number of times.
-    formatted_data = f'{data}'
+    formatted_data = f'{payload}'
     mqtt_connection.publish(topic=topic,
                             payload=json.dumps(formatted_data),
                             qos=mqtt.QoS.AT_LEAST_ONCE)

@@ -15,7 +15,7 @@ COMMAND_STREAM_RES = COMMAND_STREAM + '/res'
 OPERATIONS = [
     {
         'module': 'neopolitan', 
-        'subComand': 'test', 
+        'subCommand': 'test', 
         'friendlyName': 'Run Neopolitan Test' 
     }, # todo: make simpler?
         {
