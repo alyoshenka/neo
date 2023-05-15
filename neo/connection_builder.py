@@ -67,11 +67,10 @@ def on_resubscribe_complete():
 def publish(mqtt_connection, topic, payload):
     """Publish a message to a topic"""
     # Publish message to server desired number of times.
-    formatted_data = f'{payload}'
     mqtt_connection.publish(topic=topic,
-                            payload=json.dumps(formatted_data),
+                            payload=json.dumps(payload),
                             qos=mqtt.QoS.AT_LEAST_ONCE)
-    get_logger().info('Data: %s was published to: %s', formatted_data, topic)
+    get_logger().info('Data: %s was published to: %s', str(payload), topic)
 
 def subscribe(mqtt_connection, topic, on_message_received=log_message_received):
     """Subscribe to a topic"""

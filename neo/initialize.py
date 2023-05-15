@@ -16,4 +16,4 @@ def initialize_subscriptions(mqtt_connection):
 
 def initial_publish(mqtt_connection):
     """Publishing that happens on startup"""
-    publish(mqtt_connection, RES_DATA_OPERATIONS, json.dumps({"availableOperations": OPERATIONS}))
+    publish(mqtt_connection, RES_DATA_OPERATIONS, {"availableOperations": OPERATIONS})

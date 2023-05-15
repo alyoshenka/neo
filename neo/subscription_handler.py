@@ -4,7 +4,8 @@ import json
 import command_actions
 from neopolitan_handler import command_map as neop_command
 from connection_builder import publish
-from const import OPERATIONS,RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,COMMAND_STREAM_REQ,COMMAND_STREAM_RES
+from const import OPERATIONS,RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,\
+    COMMAND_STREAM_REQ,COMMAND_STREAM_RES
 from log import get_logger
 
 
@@ -51,7 +52,7 @@ def execute_command(obj):
     result = command_switch(obj)
     response = f'{result} command successfully processed' if result \
         else None
-    return json.dumps(response),response_topic
+    return json.dumps({"commandResponse": response}),response_topic
 
 def command_switch(obj):
     """Delegates command action"""
