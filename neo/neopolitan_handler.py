@@ -9,6 +9,7 @@ See testboardrunner.py for an example:
 from threading import Thread
 from queue import Queue
 import time
+# pylint: disable=import-error
 from neopolitan.neop import main as neop
 from log import get_logger
 

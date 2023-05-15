@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 from command_actions import log_message_received
 from log import get_logger
 
+# pylint: disable=broad-except
+
 # todo: callbacks
 def create_mqtt_connection():
     """Initializes the connection to AWS"""
@@ -64,14 +66,13 @@ def on_resubscribe_complete():
     """Callback for when resubscribe is complete"""
     print("Resubscribe complete")
 
-def publish(mqtt_connection, topic, data):
+def publish(mqtt_connection, topic, payload):
     """Publish a message to a topic"""
     # Publish message to server desired number of times.
-    formatted_data = f'{data}'
     mqtt_connection.publish(topic=topic,
-                            payload=json.dumps(formatted_data),
+                            payload=json.dumps(payload),
                             qos=mqtt.QoS.AT_LEAST_ONCE)
-    get_logger().info('Data: %s was published to: %s', formatted_data, topic)
+    get_logger().info('Data: %s was published to: %s', str(payload), topic)
 
 def subscribe(mqtt_connection, topic, on_message_received=log_message_received):
     """Subscribe to a topic"""

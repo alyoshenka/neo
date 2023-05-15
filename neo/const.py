@@ -1,45 +1,47 @@
 """Definitions"""
 
 # Data listener
-# DATA_STREAM = 'dt/neo/req' # still not what we want
+# DATA_STREAM = "dt/neo/req" # still not what we want
 DATA_OPERATIONS = 'dt/neo/operations/hubble'
 REQ_DATA_OPERATIONS = DATA_OPERATIONS + '/req'
 RES_DATA_OPERATIONS = DATA_OPERATIONS + '/res'
 # Command listener
-COMMAND_STREAM = 'cmd/neo/hubble/req'
+COMMAND_STREAM = 'cmd/neo/hubble'
+COMMAND_STREAM_REQ = COMMAND_STREAM + '/req'
+COMMAND_STREAM_RES = COMMAND_STREAM + '/res'
 
 # todo: make this better
 # Things this program can be told to do
 OPERATIONS = [
     {
-        'cmd': 'neopolitan', 
-        'data': 'test', 
-        'friendlyName': 'Run Neopolitan Test' 
-    }, # todo: make simpler?
-        {
-        'cmd': 'neopolitan', 
-        'data': 'open', 
-        'friendlyName': 'Open Neopolitan Display' 
+        "module": "neopolitan",
+        "subCommand": "test",
+        "friendlyName": "Run Neopolitan Test"
     },
     {
-        'cmd': 'neopolitan', 
-        'data': 'close', 
-        'friendlyName': 'Close Neopolitan Display' 
+        "module": "neopolitan",
+        "subCommand": "open",
+        "friendlyName": "Open Neopolitan Display"
     },
     {
-        'cmd': 'neopolitan', 
-        'data': 'update', 
-        'friendlyName': 'Update Neopolitan Display',
-        'options': ['say', 'speed', 'wrap'] # can't change graphical
+        "module": "neopolitan",
+        "subCommand": "close",
+        "friendlyName": "Close Neopolitan Display"
     },
     {
-        'cmd': 'run', 
-        'data': 'other-thing', 
-        'friendlyName': 'Run "other-thing"' 
+        "module": "neopolitan",
+        "subCommand": "update",
+        "friendlyName": "Update Neopolitan Display",
+        "options": ['say', 'speed', 'wrap']
     },
     {
-        'cmd': 'print', 
-        'data': 'hello', 
-        'friendlyName': 'Print "hello"' 
+        "module": "run",
+        "subCommand": "other-thing",
+        "friendlyName": "Run 'other-thing'"
+    },
+    {
+        "module": "print",
+        "data": "hello",
+        "friendlyName": "Print 'hello'"
     }
 ]
