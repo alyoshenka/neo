@@ -6,39 +6,41 @@ DATA_OPERATIONS = 'dt/neo/operations/hubble'
 REQ_DATA_OPERATIONS = DATA_OPERATIONS + '/req'
 RES_DATA_OPERATIONS = DATA_OPERATIONS + '/res'
 # Command listener
-COMMAND_STREAM = 'cmd/neo/hubble/req'
+COMMAND_STREAM = 'cmd/neo/hubble'
+COMMAND_STREAM_REQ = COMMAND_STREAM + '/req'
+COMMAND_STREAM_RES = COMMAND_STREAM + '/res'
 
 # todo: make this better
 # Things this program can be told to do
 OPERATIONS = [
     {
-        'cmd': 'neopolitan', 
-        'data': 'test', 
+        'module': 'neopolitan', 
+        'subComand': 'test', 
         'friendlyName': 'Run Neopolitan Test' 
     }, # todo: make simpler?
         {
-        'cmd': 'neopolitan', 
-        'data': 'open', 
+        'module': 'neopolitan', 
+        'subCommand': 'open', 
         'friendlyName': 'Open Neopolitan Display' 
     },
     {
-        'cmd': 'neopolitan', 
-        'data': 'close', 
+        'module': 'neopolitan', 
+        'subCommand': 'close', 
         'friendlyName': 'Close Neopolitan Display' 
     },
     {
-        'cmd': 'neopolitan', 
-        'data': 'update', 
+        'module': 'neopolitan', 
+        'subCommand': 'update', 
         'friendlyName': 'Update Neopolitan Display',
         'options': ['say', 'speed', 'wrap'] # can't change graphical
     },
     {
-        'cmd': 'run', 
-        'data': 'other-thing', 
+        'module': 'run', 
+        'subCommand': 'other-thing', 
         'friendlyName': 'Run "other-thing"' 
     },
     {
-        'cmd': 'print', 
+        'module': 'print', 
         'data': 'hello', 
         'friendlyName': 'Print "hello"' 
     }
