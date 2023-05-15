@@ -1,5 +1,4 @@
 """Setup functions"""
-import json
 from const import COMMAND_STREAM_REQ, REQ_DATA_OPERATIONS, RES_DATA_OPERATIONS, OPERATIONS
 from subscription_handler import handle_operation_request, handle_command_request
 from connection_builder import subscribe, publish

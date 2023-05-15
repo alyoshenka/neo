@@ -8,6 +8,7 @@ from const import OPERATIONS,RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,\
     COMMAND_STREAM_REQ,COMMAND_STREAM_RES
 from log import get_logger
 
+# pylint: disable=broad-except
 
 def handle_command_request(topic, payload, mqtt_connection):
     """Handles an incoming command from `COMMAND_STREAM`"""
@@ -17,6 +18,7 @@ def handle_command_request(topic, payload, mqtt_connection):
     get_logger().info('publishing %s to %s', response, response_topic)
     publish(mqtt_connection, response_topic, response)
 
+# pylint: disable=inconsistent-return-statements
 def handle_operation_request(topic, payload, mqtt_connection):
     """Handles a request for available operations"""
     assert topic == REQ_DATA_OPERATIONS, \
@@ -54,6 +56,8 @@ def execute_command(obj):
         else None
     return json.dumps({"commandResponse": response}),response_topic
 
+# pylint: disable=no-else-return
+# pylint: disable=too-many-return-statements
 def command_switch(obj):
     """Delegates command action"""
 

@@ -14,34 +14,34 @@ COMMAND_STREAM_RES = COMMAND_STREAM + '/res'
 # Things this program can be told to do
 OPERATIONS = [
     {
-        "module": "neopolitan",  
-        "subCommand": "test",  
-        "friendlyName": "Run Neopolitan Test" 
+        "module": "neopolitan",
+        "subCommand": "test",
+        "friendlyName": "Run Neopolitan Test"
     },
     {
-        "module": "neopolitan", 
-        "subCommand": "open", 
-        "friendlyName": "Open Neopolitan Display" 
+        "module": "neopolitan",
+        "subCommand": "open",
+        "friendlyName": "Open Neopolitan Display"
     },
     {
-        "module": "neopolitan", 
-        "subCommand": "close", 
-        "friendlyName": "Close Neopolitan Display" 
+        "module": "neopolitan",
+        "subCommand": "close",
+        "friendlyName": "Close Neopolitan Display"
     },
     {
-        "module": "neopolitan", 
-        "subCommand": "update",  
-        "friendlyName": "Update Neopolitan Display",  
-        "options": ['say', 'speed', 'wrap'] 
+        "module": "neopolitan",
+        "subCommand": "update",
+        "friendlyName": "Update Neopolitan Display",
+        "options": ['say', 'speed', 'wrap']
     },
     {
         "module": "run",
-        "subCommand": "other-thing", 
+        "subCommand": "other-thing",
         "friendlyName": "Run 'other-thing'"
     },
     {
-        "module": "print", 
-        "data": "hello", 
-        "friendlyName": "Print 'hello'" 
+        "module": "print",
+        "data": "hello",
+        "friendlyName": "Print 'hello'"
     }
 ]

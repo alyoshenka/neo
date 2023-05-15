@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 from command_actions import log_message_received
 from log import get_logger
 
+# pylint: disable=broad-except
+
 # todo: callbacks
 def create_mqtt_connection():
     """Initializes the connection to AWS"""
