@@ -4,9 +4,10 @@ import json
 import command_actions
 from neopolitan_handler import command_map as neop_command
 from connection_builder import publish
-from const import OPERATIONS,RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,\
+from const import RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,\
     COMMAND_STREAM_REQ,COMMAND_STREAM_RES
 from log import get_logger
+from routes import publish_available_operations
 
 # pylint: disable=broad-except
 
@@ -26,14 +27,16 @@ def handle_operation_request(topic, payload, mqtt_connection):
     logger = get_logger()
     logger.info('Data operations were requested')
     response_topic = RES_DATA_OPERATIONS
-    obj = json.loads(payload)
-    if obj is None:
-        logger.warning('Payload cannot be loaded into JSON: %s', payload)
-        return None
-    if 'responseTopic' in obj:
-        logger.info('Requested with non-default response topic: %s', obj['responseTopic'])
-        response_topic = obj['responseTopic']
-    publish(mqtt_connection, response_topic, json.dumps({"availableOperations": OPERATIONS}))
+
+    try:
+        obj = json.loads(payload)
+        if 'responseTopic' in obj:
+            logger.info('Requested with non-default response topic: %s', obj['responseTopic'])
+            response_topic = obj['responseTopic']
+    except Exception as err:
+        logger.warning('Payload cannot be loaded into JSON: %s - %s', payload, err)
+
+    publish_available_operations(mqtt_connection, topic=response_topic)
 
 # todo: redesign to be more like AWS doc
 # pylint: disable=unused-argument
