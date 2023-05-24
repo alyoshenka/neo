@@ -7,6 +7,7 @@ from connection_builder import publish
 from const import OPERATIONS,RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,\
     COMMAND_STREAM_REQ,COMMAND_STREAM_RES
 from log import get_logger
+from routes import publish_available_operations
 
 # pylint: disable=broad-except
 
@@ -35,8 +36,7 @@ def handle_operation_request(topic, payload, mqtt_connection):
     except Exception as err:
         logger.warning('Payload cannot be loaded into JSON: %s - %s', payload, err)
 
-    # todo: used twice, make a function
-    publish(mqtt_connection, response_topic, {"availableOperations": OPERATIONS})
+    publish_available_operations(mqtt_connection, topic=response_topic)
 
 # todo: redesign to be more like AWS doc
 # pylint: disable=unused-argument
