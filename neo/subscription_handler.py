@@ -4,7 +4,7 @@ import json
 import command_actions
 from neopolitan_handler import command_map as neop_command
 from connection_builder import publish
-from const import OPERATIONS,RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,\
+from const import RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,\
     COMMAND_STREAM_REQ,COMMAND_STREAM_RES
 from log import get_logger
 from routes import publish_available_operations
