@@ -32,7 +32,7 @@ OPERATIONS = [
         "module": "neopolitan",
         "subCommand": "update",
         "friendlyName": "Update Neopolitan Display",
-        "options": ['say', 'speed', 'wrap']
+        "options": {'say': None, 'speed': None, 'wrap': None}
     },
     {
         "module": "run",
