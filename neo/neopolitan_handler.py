@@ -11,18 +11,25 @@ from queue import Queue
 import time
 # pylint: disable=import-error
 from neopolitan.neop import main as neop
+from neopolitan.demos import \
+    display_all, \
+    display_all_lowercase_letters, \
+    display_all_uppercase_letters, \
+    display_all_numbers, \
+    display_all_symbols
 from log import get_logger
 
 # todo: is global var ok?
 NEOPOLITAN_THREAD = None
 EVENT_QUEUE = None
 
+# pylint: disable=too-many-return-statements
 def command_map(data):
     """Returns the appropriate function"""
     logger = get_logger()
     if data == 'open':
         logger.info('Returning "neopolitan open" func')
-        return open_display
+        return lambda : open_display(neop)
     if data == 'close':
         logger.info('Returning "neopolitan close" func')
         return close_display
@@ -32,22 +39,39 @@ def command_map(data):
     if data == 'test':
         logger.info('Returning "neopolitan test" func')
         return test_display
+    # new operations
+    if data == 'displayAll':
+        logger.info('Returning "neopolitan displayAll" func')
+        return lambda : open_display(display_all)
+    if data == 'displayAllLowercase':
+        logger.info('Returning "neopolitan displayAll" func')
+        return lambda : open_display(display_all_lowercase_letters)
+    if data == 'displayAllUppercase':
+        logger.info('Returning "neopolitan displayAllUppercase" func')
+        return lambda : open_display(display_all_uppercase_letters)
+    if data == 'displayAllNumbers':
+        logger.info('Returning "neopolitan displayAllNumbers" func')
+        return lambda : open_display(display_all_numbers)
+    if data == 'displayAllSymbols':
+        logger.info('Returning "neopolitan displayAllSymbols" func')
+        return lambda : open_display(display_all_symbols)
     logger.warning('No Neopolitan action found for: %s', data)
     return None
 
-def open_display():
-    """Open the neopolitan display. Should be blank""" # todo: initialize blank?
+def open_display(func):
+    """Open the neopolitan display with the default welcome message"""
     logger = get_logger()
     logger.info('running open_display')
 
     global NEOPOLITAN_THREAD
     global EVENT_QUEUE
     if NEOPOLITAN_THREAD or EVENT_QUEUE:
-        logger.warning('NEOPOLITAN_THREAD or EVENT_QUEUE already initialized')
-        return
+        logger.warning('NEOPOLITAN_THREAD or EVENT_QUEUE already initialized,'\
+                       'but closing display anyway')
+        close_display()
 
     EVENT_QUEUE = Queue()
-    NEOPOLITAN_THREAD = Thread(target=neop, args=(EVENT_QUEUE,))
+    NEOPOLITAN_THREAD = Thread(target=func, args=(EVENT_QUEUE,))
     NEOPOLITAN_THREAD.start()
 
 def close_display():
@@ -112,6 +136,6 @@ def test_display():
         time.sleep(slp)
         func()
 
-    open_display()
+    open_display(neop)
     Thread(target=wait_then_add, args=(5, 'say beepboop')).start()
     Thread(target=wait_then_do, args=(10, close_display)).start()

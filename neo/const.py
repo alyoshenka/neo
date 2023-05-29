@@ -35,13 +35,41 @@ OPERATIONS = [
         "options": {'say': None, 'speed': None, 'wrap': None}
     },
     {
-        "module": "run",
-        "subCommand": "other-thing",
-        "friendlyName": "Run 'other-thing'"
+        "module": "neopolitan",
+        "subCommand": "displayAll",
+        "friendlyName": "Display All Symbols"
     },
     {
-        "module": "print",
-        "data": "hello",
-        "friendlyName": "Print 'hello'"
+        "module": "neopolitan",
+        "subCommand": "displayAllLowercase",
+        "friendlyName": "Display Lowercase Letters"
+    },
+    {
+        "module": "neopolitan",
+        "subCommand": "displayAllUppercase",
+        "friendlyName": "Display Uppercase Letters"
+    },
+    {
+        "module": "neopolitan",
+        "subCommand": "displayAllNumbers",
+        "friendlyName": "Display All Numbers"
+    },
+    {
+        "module": "neopolitan",
+        "subCommand": "displayAllSymbols",
+        "friendlyName": "Display All Symbols"
     }
 ]
+
+"""
+{
+    "module": "run",
+    "subCommand": "other-thing",
+    "friendlyName": "Run 'other-thing'"
+},
+{
+    "module": "print",
+    "data": "hello",
+    "friendlyName": "Print 'hello'"
+},
+    """
