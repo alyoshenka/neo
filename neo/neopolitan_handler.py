@@ -11,6 +11,12 @@ from queue import Queue
 import time
 # pylint: disable=import-error
 from neopolitan.neop import main as neop
+from neopolitan.demos import \
+    display_all, \
+    display_all_lowercase_letters, \
+    display_all_uppercase_letters, \
+    display_all_numbers, \
+    display_all_symbols
 from log import get_logger
 
 # todo: is global var ok?
@@ -32,6 +38,22 @@ def command_map(data):
     if data == 'test':
         logger.info('Returning "neopolitan test" func')
         return test_display
+    # new operations
+    if data == 'displayAll':
+        logger.info('Returning "neopolitan displayAll" func')
+        return lambda : open_display(display_all)
+    if data == 'displayAllLowercase':
+        logger.info('Returning "neopolitan displayAll" func')
+        return lambda : open_display(display_all_lowercase_letters)
+    if data == 'displayAll':
+        logger.info('Returning "neopolitan displayAllUppercase" func')
+        return lambda : open_display(display_all_uppercase_letters)
+    if data == 'displayAll':
+        logger.info('Returning "neopolitan displayAllNumbers" func')
+        return lambda : open_display(display_all_numbers)
+    if data == 'displayAll':
+        logger.info('Returning "neopolitan displayAllSymbols" func')
+        return lambda : open_display(display_all_symbols)
     logger.warning('No Neopolitan action found for: %s', data)
     return None
 

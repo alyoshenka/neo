@@ -44,4 +44,5 @@ OPERATIONS = [
         "data": "hello",
         "friendlyName": "Print 'hello'"
     }
+    # todo: add additional operations for demos
 ]
