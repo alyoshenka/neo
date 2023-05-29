@@ -58,15 +58,15 @@ def command_map(data):
     return None
 
 def open_display(func):
-    """Open the neopolitan display. Should be blank""" # todo: initialize blank?
+    """Open the neopolitan display with the default welcome message"""
     logger = get_logger()
     logger.info('running open_display')
 
     global NEOPOLITAN_THREAD
     global EVENT_QUEUE
     if NEOPOLITAN_THREAD or EVENT_QUEUE:
-        logger.warning('NEOPOLITAN_THREAD or EVENT_QUEUE already initialized')
-        return
+        logger.warning('NEOPOLITAN_THREAD or EVENT_QUEUE already initialized, but closing display anyway')
+        close_display()
 
     EVENT_QUEUE = Queue()
     NEOPOLITAN_THREAD = Thread(target=func, args=(EVENT_QUEUE,))
