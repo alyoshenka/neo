@@ -23,6 +23,7 @@ from log import get_logger
 NEOPOLITAN_THREAD = None
 EVENT_QUEUE = None
 
+# pylint: disable=too-many-return-statements
 def command_map(data):
     """Returns the appropriate function"""
     logger = get_logger()
@@ -65,7 +66,8 @@ def open_display(func):
     global NEOPOLITAN_THREAD
     global EVENT_QUEUE
     if NEOPOLITAN_THREAD or EVENT_QUEUE:
-        logger.warning('NEOPOLITAN_THREAD or EVENT_QUEUE already initialized, but closing display anyway')
+        logger.warning('NEOPOLITAN_THREAD or EVENT_QUEUE already initialized,'\
+                       'but closing display anyway')
         close_display()
 
     EVENT_QUEUE = Queue()

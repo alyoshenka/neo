@@ -35,16 +35,6 @@ OPERATIONS = [
         "options": {'say': None, 'speed': None, 'wrap': None}
     },
     {
-        "module": "run",
-        "subCommand": "other-thing",
-        "friendlyName": "Run 'other-thing'"
-    },
-    {
-        "module": "print",
-        "data": "hello",
-        "friendlyName": "Print 'hello'"
-    },
-    {
         "module": "neopolitan",
         "subCommand": "displayAll",
         "friendlyName": "Display All Symbols"
@@ -70,3 +60,16 @@ OPERATIONS = [
         "friendlyName": "Display All Symbols"
     }
 ]
+
+"""
+{
+    "module": "run",
+    "subCommand": "other-thing",
+    "friendlyName": "Run 'other-thing'"
+},
+{
+    "module": "print",
+    "data": "hello",
+    "friendlyName": "Print 'hello'"
+},
+    """
