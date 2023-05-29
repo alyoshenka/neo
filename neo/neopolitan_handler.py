@@ -45,13 +45,13 @@ def command_map(data):
     if data == 'displayAllLowercase':
         logger.info('Returning "neopolitan displayAll" func')
         return lambda : open_display(display_all_lowercase_letters)
-    if data == 'displayAll':
+    if data == 'displayAllUppercase':
         logger.info('Returning "neopolitan displayAllUppercase" func')
         return lambda : open_display(display_all_uppercase_letters)
-    if data == 'displayAll':
+    if data == 'displayAllNumbers':
         logger.info('Returning "neopolitan displayAllNumbers" func')
         return lambda : open_display(display_all_numbers)
-    if data == 'displayAll':
+    if data == 'displayAllSymbols':
         logger.info('Returning "neopolitan displayAllSymbols" func')
         return lambda : open_display(display_all_symbols)
     logger.warning('No Neopolitan action found for: %s', data)
