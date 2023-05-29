@@ -22,7 +22,7 @@ def command_map(data):
     logger = get_logger()
     if data == 'open':
         logger.info('Returning "neopolitan open" func')
-        return open_display
+        return lambda : open_display(neop)
     if data == 'close':
         logger.info('Returning "neopolitan close" func')
         return close_display
@@ -35,7 +35,7 @@ def command_map(data):
     logger.warning('No Neopolitan action found for: %s', data)
     return None
 
-def open_display():
+def open_display(func):
     """Open the neopolitan display. Should be blank""" # todo: initialize blank?
     logger = get_logger()
     logger.info('running open_display')
@@ -47,7 +47,7 @@ def open_display():
         return
 
     EVENT_QUEUE = Queue()
-    NEOPOLITAN_THREAD = Thread(target=neop, args=(EVENT_QUEUE,))
+    NEOPOLITAN_THREAD = Thread(target=func, args=(EVENT_QUEUE,))
     NEOPOLITAN_THREAD.start()
 
 def close_display():
@@ -112,6 +112,6 @@ def test_display():
         time.sleep(slp)
         func()
 
-    open_display()
+    open_display(neop)
     Thread(target=wait_then_add, args=(5, 'say beepboop')).start()
     Thread(target=wait_then_do, args=(10, close_display)).start()
