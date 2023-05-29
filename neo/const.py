@@ -58,6 +58,11 @@ OPERATIONS = [
         "module": "neopolitan",
         "subCommand": "displayAllSymbols",
         "friendlyName": "Display All Symbols"
+    },
+    {
+        "module": "neopolitan",
+        "subCommand": "colorDemo",
+        "friendlyName": "Display Color Demo"
     }
 ]
 

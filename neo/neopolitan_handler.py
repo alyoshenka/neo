@@ -10,13 +10,14 @@ from threading import Thread
 from queue import Queue
 import time
 # pylint: disable=import-error
-from neopolitan.neop import main as neop
+from neopolitan.neop import main as default
 from neopolitan.demos import \
     display_all, \
     display_all_lowercase_letters, \
     display_all_uppercase_letters, \
     display_all_numbers, \
-    display_all_symbols
+    display_all_symbols, \
+    color_demo
 from log import get_logger
 
 # todo: is global var ok?
@@ -29,7 +30,7 @@ def command_map(data):
     logger = get_logger()
     if data == 'open':
         logger.info('Returning "neopolitan open" func')
-        return lambda : open_display(neop)
+        return lambda : open_display(default)
     if data == 'close':
         logger.info('Returning "neopolitan close" func')
         return close_display
@@ -39,7 +40,6 @@ def command_map(data):
     if data == 'test':
         logger.info('Returning "neopolitan test" func')
         return test_display
-    # new operations
     if data == 'displayAll':
         logger.info('Returning "neopolitan displayAll" func')
         return lambda : open_display(display_all)
@@ -55,19 +55,22 @@ def command_map(data):
     if data == 'displayAllSymbols':
         logger.info('Returning "neopolitan displayAllSymbols" func')
         return lambda : open_display(display_all_symbols)
+    if data == 'colorDemo':
+        logger.info('Returning "neopolitan colorDemo" func')
+        return lambda : open_display(color_demo)
     logger.warning('No Neopolitan action found for: %s', data)
     return None
 
-def open_display(func):
+def open_display(func=default):
     """Open the neopolitan display with the default welcome message"""
     logger = get_logger()
-    logger.info('running open_display')
+    logger.info('running open_display with %s', func.__name__)
 
     global NEOPOLITAN_THREAD
     global EVENT_QUEUE
     if NEOPOLITAN_THREAD or EVENT_QUEUE:
         logger.warning('NEOPOLITAN_THREAD or EVENT_QUEUE already initialized,'\
-                       'but closing display anyway')
+                       ' but closing display anyway')
         close_display()
 
     EVENT_QUEUE = Queue()
@@ -136,6 +139,6 @@ def test_display():
         time.sleep(slp)
         func()
 
-    open_display(neop)
+    open_display()
     Thread(target=wait_then_add, args=(5, 'say beepboop')).start()
     Thread(target=wait_then_do, args=(10, close_display)).start()
