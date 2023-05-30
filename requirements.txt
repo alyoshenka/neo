@@ -2,7 +2,7 @@ pylint==2.16.1
 pytest==7.2.1
 python-dotenv
 
-awscrt==0.8.0
+awscrt
 AWSIoTPythonSDK==1.5.2
-awsiotsdk==1.4.0
+awsiotsdk
 neopolitan
