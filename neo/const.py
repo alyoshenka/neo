@@ -15,59 +15,59 @@ COMMAND_STREAM_RES = COMMAND_STREAM + '/res'
 OPERATIONS = [
     {
         "module": "neopolitan",
-        "subCommand": "test",
-        "friendlyName": "Run Neopolitan Test"
-    },
-    {
-        "module": "neopolitan",
         "subCommand": "open",
-        "friendlyName": "Open Neopolitan Display"
+        "friendlyName": "o Open Neopolitan Display"
     },
     {
         "module": "neopolitan",
         "subCommand": "close",
-        "friendlyName": "Close Neopolitan Display"
+        "friendlyName": "x Close Neopolitan Display"
     },
     {
         "module": "neopolitan",
         "subCommand": "update",
-        "friendlyName": "Update Neopolitan Display",
+        "friendlyName": "u Update Neopolitan Display",
         "options": {'say': None, 'speed': None, 'wrap': None}
     },
     {
         "module": "neopolitan",
+        "subCommand": "test",
+        "friendlyName": "t Run Neopolitan Test"
+    },
+    {
+        "module": "neopolitan",
         "subCommand": "displayAll",
-        "friendlyName": "Display All Symbols"
+        "friendlyName": "- Display All Symbols"
     },
     {
         "module": "neopolitan",
         "subCommand": "displayAllLowercase",
-        "friendlyName": "Display Lowercase Letters"
+        "friendlyName": "- Display Lowercase Letters"
     },
     {
         "module": "neopolitan",
         "subCommand": "displayAllUppercase",
-        "friendlyName": "Display Uppercase Letters"
+        "friendlyName": "- Display Uppercase Letters"
     },
     {
         "module": "neopolitan",
         "subCommand": "displayAllNumbers",
-        "friendlyName": "Display All Numbers"
+        "friendlyName": "- Display All Numbers"
     },
     {
         "module": "neopolitan",
         "subCommand": "displayAllSymbols",
-        "friendlyName": "Display All Symbols"
+        "friendlyName": "- Display All Symbols"
     },
     {
         "module": "neopolitan",
         "subCommand": "colorDemo",
-        "friendlyName": "Display Color Demo"
+        "friendlyName": "* Display Color Demo"
     },
     {
         "module": "neopolitan",
         "subCommand": "stockTicker",
-        "friendlyName": "Run Stock Ticker"
+        "friendlyName": "$ Run Stock Ticker"
     }
 ]
 
