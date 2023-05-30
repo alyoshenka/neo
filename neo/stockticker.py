@@ -5,6 +5,7 @@ Note that this file is for demo purposes only,
     and will eventually be abstracted into its own repository
 """
 
+# pylint: disable=import-error
 import yfinance as yf
 from neopolitan.board_functions.colors import GREEN, RED
 from neopolitan.demos import display
@@ -29,23 +30,16 @@ def get_ticker_data(sym):
     """"Query and return formatted data from a ticker symbol"""
     try:
         data = yf.Ticker(str(sym))
+    # pylint: disable=broad-except
     except Exception as err:
         print("ERROR", err)
         return None
-
     info = data.info
-    #hist = data.history(period='5d')
-    
     close = info['previousClose']
-    #openP = info['open']
-    #high = info['dayHigh']
-    #low = info['dayLow']
     cur = info['currentPrice']
     name = info['shortName']
     symbol = info['symbol']
-
     delta = cur - close
-
     obj = {
         "symbol": symbol,
         "name": name,
@@ -58,6 +52,7 @@ def get_ticker_data(sym):
 def ticker_obj_to_string(obj):
     """Converts a ticker object into a nice display string"""
     arrow = UP if obj["up?"] else DOWN
+    # pylint: disable=consider-using-f-string
     dollar = '{0:.2f}'.format(obj["dollarDelta"])
     percent = '{0:.2f}'.format(obj["percentDelta"])
     return f'{obj["symbol"]} {arrow} ${dollar} {percent}%'
