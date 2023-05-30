@@ -63,6 +63,11 @@ OPERATIONS = [
         "module": "neopolitan",
         "subCommand": "colorDemo",
         "friendlyName": "Display Color Demo"
+    },
+    {
+        "module": "neopolitan",
+        "subCommand": "stockTicker",
+        "friendlyName": "Run Stock Ticker"
     }
 ]
 

@@ -18,6 +18,7 @@ from neopolitan.demos import \
     display_all_numbers, \
     display_all_symbols, \
     color_demo
+from stockticker import run
 from log import get_logger
 
 # todo: is global var ok?
@@ -58,6 +59,10 @@ def command_map(data):
     if data == 'colorDemo':
         logger.info('Returning "neopolitan colorDemo" func')
         return lambda : open_display(color_demo)
+    # todo: this should be somewhere else
+    if data == 'stockTicker':
+        logger.info('Returning "neopolitan stockTicker" func')
+        return lambda : open_display(run)
     logger.warning('No Neopolitan action found for: %s', data)
     return None
 
