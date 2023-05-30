@@ -6,3 +6,5 @@ awscrt
 AWSIoTPythonSDK==1.5.2
 awsiotsdk
 neopolitan
+
+yfinance
