@@ -13,9 +13,9 @@ def initialize_subscriptions(mqtt_connection):
     subscribe(mqtt_connection, COMMAND_STREAM_REQ,
               on_message_received=lambda topic,payload :
               handle_command_request(topic,payload,mqtt_connection))
-    subscribe(mqtt_connection, HEARTBEAT_REQ, 
-              on_message_received=lambda topic,payload: 
-              publish_heartbeat(topic,payload,mqtt_connection))
+    subscribe(mqtt_connection, HEARTBEAT_REQ,
+              on_message_received=lambda topic,payload:
+              publish_heartbeat(mqtt_connection))
 
 def initial_publish(mqtt_connection):
     """Publishing that happens on startup"""

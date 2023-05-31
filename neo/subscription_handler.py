@@ -39,7 +39,7 @@ def handle_operation_request(topic, payload, mqtt_connection):
 
     publish_available_operations(mqtt_connection, topic=response_topic)
 
-def publish_heartbeat(topic, payload, mqtt_connection):
+def publish_heartbeat(mqtt_connection):
     """Publishes the device id"""
     publish(mqtt_connection, HEARTBEAT_RES, { "clientId": os.environ['CLIENT_ID'] })
 
