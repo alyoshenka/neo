@@ -1,11 +1,12 @@
 """Directs actions based on command prompt from an MQTT topic"""
 
+import os
 import json
 import command_actions
 from neopolitan_handler import command_map as neop_command
 from connection_builder import publish
 from const import RES_DATA_OPERATIONS,REQ_DATA_OPERATIONS,\
-    COMMAND_STREAM_REQ,COMMAND_STREAM_RES
+    COMMAND_STREAM_REQ,COMMAND_STREAM_RES, HEARTBEAT_RES
 from log import get_logger
 from routes import publish_available_operations
 
@@ -37,6 +38,10 @@ def handle_operation_request(topic, payload, mqtt_connection):
         logger.warning('Payload cannot be loaded into JSON: %s - %s', payload, err)
 
     publish_available_operations(mqtt_connection, topic=response_topic)
+
+def publish_heartbeat(topic, payload, mqtt_connection):
+    """Publishes the device id"""
+    publish(mqtt_connection, HEARTBEAT_RES, { "clientId": os.environ['CLIENT_ID'] })
 
 # todo: redesign to be more like AWS doc
 # pylint: disable=unused-argument

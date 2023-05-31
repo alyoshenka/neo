@@ -9,6 +9,9 @@ RES_DATA_OPERATIONS = DATA_OPERATIONS + '/res'
 COMMAND_STREAM = 'cmd/neo/hubble'
 COMMAND_STREAM_REQ = COMMAND_STREAM + '/req'
 COMMAND_STREAM_RES = COMMAND_STREAM + '/res'
+# Heartbreat listener
+HEARTBEAT_REQ = 'dt/neo/heartbeat/req'
+HEARTBEAT_RES = 'dt/neo/heartbeat/res'
 
 # todo: make this better
 # Things this program can be told to do
