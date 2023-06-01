@@ -17,15 +17,20 @@ from neopolitan.writing.data_transformation import dispatch_str_or_lst
 from log import init_logger
 
 TICKERS = ["tsla", "uber", "wmt", "ko", "tgt", "orcl", "sbux", "aapl"]
-TICKERS = ["tsla", "uber"]
 UP = '↑'
 DOWN = '↓'
 MIN_LEN = WIDTH * HEIGHT * 3 # todo: make sure works when scroll fast
+TICKER_IDX = 2 # 3?
 
 def monitor_message_length(neop):
+    global TICKER_IDX # bad? yeah probably
     while not neop.display.should_exit:
         if len(neop.board.data) < MIN_LEN:
-            next_ticker = get_ticker_data('wmt') # todo: next ticker, not static
+            next_sym = TICKERS[TICKER_IDX]
+            TICKER_IDX += 1
+            if TICKER_IDX >= len(TICKERS):
+                TICKER_IDX = 0
+            next_ticker = get_ticker_data(next_sym) # todo: next ticker, not static
             next_msg = \
                 ('  ' + ticker_obj_to_string(next_ticker), \
                  GREEN if next_ticker['up?'] else RED)
@@ -58,7 +63,7 @@ def run(events):
 
 def construct_message():
     """Constructs the data to send to neopolitan to display stocks"""
-    all_ticker_data = [get_ticker_data(sym) for sym in TICKERS]
+    all_ticker_data = [get_ticker_data(sym) for sym in TICKERS[0:TICKER_IDX]]
     msg = []
     for tick in all_ticker_data:
         msg.append(('  ' + ticker_obj_to_string(tick), GREEN if tick['up?'] else RED))
