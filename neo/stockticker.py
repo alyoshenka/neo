@@ -15,7 +15,7 @@ from neopolitan.const import HEIGHT, WIDTH
 from neopolitan.writing.data_transformation import dispatch_str_or_lst
 from log import init_logger
 
-TICKERS = ["tsla", "uber", "wmt", "ko", "tgt", "orcl", "sbux", "aapl"]
+TICKERS = ['tsla', 'uber', 'wmt', 'tgt', 'orcl', 'sbux', 'aapl', 'pep']
 UP = '↑'
 DOWN = '↓'
 MIN_LEN = WIDTH * HEIGHT * 3 # todo: make sure works when scroll fast
