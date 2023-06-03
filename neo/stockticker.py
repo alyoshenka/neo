@@ -5,10 +5,9 @@ Note that this file is for demo purposes only,
     and will eventually be abstracted into its own repository
 """
 
+from threading import Thread
 # pylint: disable=import-error
 import yfinance as yf
-from threading import Thread
-import time
 from neopolitan.board_functions.colors import GREEN, RED
 from neopolitan.board_functions.board_data import default_board_data
 from neopolitan.naples import Neopolitan
@@ -23,6 +22,8 @@ MIN_LEN = WIDTH * HEIGHT * 3 # todo: make sure works when scroll fast
 TICKER_IDX = 2 # 3?
 
 def monitor_message_length(neop):
+    """Monitors how much of a message is left, and fetches the next ticker if it is time"""
+    # pylint: disable=global-statement
     global TICKER_IDX # bad? yeah probably
     while not neop.display.should_exit:
         if len(neop.board.data) < MIN_LEN:
@@ -52,12 +53,12 @@ def run(events):
     print(neop.board_data.should_wrap)
     # thread that checks board data length
     #   query new data when it gets too low
-    t = Thread(target=monitor_message_length, args=(neop,))
-    t.start()
+    thrd = Thread(target=monitor_message_length, args=(neop,))
+    thrd.start()
 
     neop.loop()
 
-    t.join()
+    thrd.join()
     # todo: maybe this one should delete itself?
     del neop
 
