@@ -100,5 +100,3 @@ def ticker_obj_to_string(obj):
     dollar = '{0:.2f}'.format(obj["dollarDelta"])
     percent = '{0:.2f}'.format(obj["percentDelta"])
     return f'{obj["symbol"]} {arrow} ${dollar} {percent}%'
-
-run(None)
