@@ -6,6 +6,7 @@ Note that this file is for demo purposes only,
 """
 
 from threading import Thread
+import requests
 # pylint: disable=import-error
 import yfinance as yf
 from neopolitan.board_functions.colors import GREEN, RED
@@ -27,20 +28,24 @@ def monitor_message_length(neop):
     global TICKER_IDX # bad? yeah probably
     while not neop.display.should_exit:
         if len(neop.board.data) < MIN_LEN:
-            next_sym = TICKERS[TICKER_IDX]
-            TICKER_IDX += 1
-            if TICKER_IDX >= len(TICKERS):
-                TICKER_IDX = 0
-            try:
-                next_ticker = get_ticker_data(next_sym)
-                next_msg = \
-                    ('  ' + ticker_obj_to_string(next_ticker), \
-                    GREEN if next_ticker['up?'] else RED)
-                new_data = dispatch_str_or_lst([next_msg])
-                neop.board.set_data(neop.board.data + new_data)
-                get_logger().info(f'Got new ticker data for: {next_sym}')
-            except Exception as err:
-                get_logger().warning(f'Error getting ticker data: {str(err)}')
+            if is_connected_to_internet():
+                next_sym = TICKERS[TICKER_IDX]
+                TICKER_IDX += 1
+                if TICKER_IDX >= len(TICKERS):
+                    TICKER_IDX = 0
+                try:
+                    next_ticker = get_ticker_data(next_sym)
+                    next_msg = \
+                        ('  ' + ticker_obj_to_string(next_ticker), \
+                        GREEN if next_ticker['up?'] else RED)
+                    new_data = dispatch_str_or_lst([next_msg])
+                    neop.board.set_data(neop.board.data + new_data)
+                    get_logger().info(f'Got new ticker data for: {next_sym}')
+                except Exception as err:
+                    get_logger().warning(f'Error getting ticker data: {str(err)}')
+            else:
+                # ToDo: this is kinda bad code
+                neop.board.set_data(neop.board.data + dispatch_str_or_lst('No internet connection'))
 
 def run(events):
     """Run the stock ticker"""
@@ -100,3 +105,17 @@ def ticker_obj_to_string(obj):
     dollar = '{0:.2f}'.format(obj["dollarDelta"])
     percent = '{0:.2f}'.format(obj["percentDelta"])
     return f'{obj["symbol"]} {arrow} ${dollar} {percent}%'
+
+# ToDo: this should go somewhere else
+def is_connected_to_internet():
+    """Check whether there is an internet connection"""
+    timeout = 1
+    try:
+        requests.head('http://google.com/', timeout=timeout)
+        return True
+    except requests.ConnectionError:
+        get_logger().warning('No internet connection')
+        return False
+    except Exception as err:
+        get_logger().warning(f'Error: {str(err)}')
+    return False
