@@ -5,15 +5,17 @@ Note that this file is for demo purposes only,
     and will eventually be abstracted into its own repository
 """
 
-from threading import Thread
+# pylint: disable=broad-except
 # pylint: disable=import-error
+from threading import Thread
+import requests
 import yfinance as yf
 from neopolitan.board_functions.colors import GREEN, RED
 from neopolitan.board_functions.board_data import default_board_data
 from neopolitan.naples import Neopolitan
 from neopolitan.const import HEIGHT, WIDTH
 from neopolitan.writing.data_transformation import dispatch_str_or_lst
-from log import init_logger
+from log import get_logger
 
 TICKERS = ['tsla', 'uber', 'wmt', 'tgt', 'orcl', 'sbux', 'aapl', 'pep']
 UP = '↑'
@@ -27,27 +29,34 @@ def monitor_message_length(neop):
     global TICKER_IDX # bad? yeah probably
     while not neop.display.should_exit:
         if len(neop.board.data) < MIN_LEN:
-            next_sym = TICKERS[TICKER_IDX]
-            TICKER_IDX += 1
-            if TICKER_IDX >= len(TICKERS):
-                TICKER_IDX = 0
-            next_ticker = get_ticker_data(next_sym) # todo: next ticker, not static
-            next_msg = \
-                ('  ' + ticker_obj_to_string(next_ticker), \
-                 GREEN if next_ticker['up?'] else RED)
-            new_data = dispatch_str_or_lst([next_msg])
-            neop.board.set_data(neop.board.data + new_data)
+            if is_connected_to_internet():
+                next_sym = TICKERS[TICKER_IDX]
+                TICKER_IDX += 1
+                if TICKER_IDX >= len(TICKERS):
+                    TICKER_IDX = 0
+                try:
+                    next_ticker = get_ticker_data(next_sym)
+                    next_msg = \
+                        ('  ' + ticker_obj_to_string(next_ticker), \
+                        GREEN if next_ticker['up?'] else RED)
+                    new_data = dispatch_str_or_lst([next_msg])
+                    neop.board.set_data(neop.board.data + new_data)
+                    get_logger().info('Got new ticker data for: %s', next_sym)
+                except Exception as err:
+                    get_logger().warning('Error getting ticker data: %s', str(err))
+            else:
+                # ToDo: this is kinda bad code
+                new_data = dispatch_str_or_lst([(' - No internet connection -', RED)])
+                neop.board.set_data(neop.board.data + new_data)
 
 def run(events):
     """Run the stock ticker"""
-    init_logger()
+    get_logger().info('Running stock ticker')
 
     board_data = default_board_data.copy()
     board_data.message = construct_message()
     board_data.should_wrap = False
-
-
-    # board_data.scroll_fast()
+    board_data.scroll_fast()
 
     neop = Neopolitan(board_data=board_data, events=events)
     # thread that checks board data length
@@ -58,7 +67,6 @@ def run(events):
     neop.loop()
 
     thrd.join()
-    # todo: maybe this one should delete itself?
     del neop
 
 def construct_message():
@@ -99,3 +107,17 @@ def ticker_obj_to_string(obj):
     dollar = '{0:.2f}'.format(obj["dollarDelta"])
     percent = '{0:.2f}'.format(obj["percentDelta"])
     return f'{obj["symbol"]} {arrow} ${dollar} {percent}%'
+
+# ToDo: this should go somewhere else
+def is_connected_to_internet():
+    """Check whether there is an internet connection"""
+    timeout = 1
+    try:
+        requests.head('http://google.com/', timeout=timeout)
+        return True
+    except requests.ConnectionError:
+        get_logger().warning('No internet connection')
+        return False
+    except Exception as err:
+        get_logger().warning('Error: %s', str(err))
+    return False
