@@ -5,9 +5,10 @@ Note that this file is for demo purposes only,
     and will eventually be abstracted into its own repository
 """
 
+# pylint: disable=broad-except
+# pylint: disable=import-error
 from threading import Thread
 import requests
-# pylint: disable=import-error
 import yfinance as yf
 from neopolitan.board_functions.colors import GREEN, RED
 from neopolitan.board_functions.board_data import default_board_data
@@ -40,12 +41,13 @@ def monitor_message_length(neop):
                         GREEN if next_ticker['up?'] else RED)
                     new_data = dispatch_str_or_lst([next_msg])
                     neop.board.set_data(neop.board.data + new_data)
-                    get_logger().info(f'Got new ticker data for: {next_sym}')
+                    get_logger().info('Got new ticker data for: %s', next_sym)
                 except Exception as err:
-                    get_logger().warning(f'Error getting ticker data: {str(err)}')
+                    get_logger().warning('Error getting ticker data: %s', str(err))
             else:
                 # ToDo: this is kinda bad code
-                neop.board.set_data(neop.board.data + dispatch_str_or_lst('No internet connection'))
+                new_data = dispatch_str_or_lst([(' - No internet connection -', RED)])
+                neop.board.set_data(neop.board.data + new_data)
 
 def run(events):
     """Run the stock ticker"""
@@ -117,5 +119,5 @@ def is_connected_to_internet():
         get_logger().warning('No internet connection')
         return False
     except Exception as err:
-        get_logger().warning(f'Error: {str(err)}')
+        get_logger().warning('Error: %s', str(err))
     return False
