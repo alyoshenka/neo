@@ -58,16 +58,17 @@ def run(events):
     board_data.should_wrap = False
     board_data.scroll_fast()
 
-    neop = Neopolitan(board_data=board_data, events=events)
-    # thread that checks board data length
-    #   query new data when it gets too low
-    thrd = Thread(target=monitor_message_length, args=(neop,))
-    thrd.start()
+    try:
+        neop = Neopolitan(board_data=board_data, events=events)
+        # thread that checks board data length
+        #   query new data when it gets too low
+        thrd = Thread(target=monitor_message_length, args=(neop,))
+        thrd.start()
 
-    neop.loop()
-
-    thrd.join()
-    del neop
+        neop.loop()
+    finally:
+        thrd.join()
+        del neop
 
 def construct_message():
     """Constructs the data to send to neopolitan to display stocks"""
