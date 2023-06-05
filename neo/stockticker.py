@@ -50,7 +50,6 @@ def run(events):
     # board_data.scroll_fast()
 
     neop = Neopolitan(board_data=board_data, events=events)
-    print(neop.board_data.should_wrap)
     # thread that checks board data length
     #   query new data when it gets too low
     thrd = Thread(target=monitor_message_length, args=(neop,))

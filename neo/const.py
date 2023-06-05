@@ -19,58 +19,69 @@ OPERATIONS = [
     {
         "module": "neopolitan",
         "subCommand": "open",
-        "friendlyName": "o Open Neopolitan Display"
+        "friendlyName": "Open Neopolitan Display",
+        "group": "major"
     },
     {
         "module": "neopolitan",
         "subCommand": "close",
-        "friendlyName": "x Close Neopolitan Display"
+        "friendlyName": "Close Neopolitan Display",
+        "group": "major"
     },
     {
         "module": "neopolitan",
         "subCommand": "update",
-        "friendlyName": "u Update Neopolitan Display",
-        "options": {'say': None, 'speed': None, 'wrap': None}
+        "friendlyName": "Update Neopolitan Display",
+        "options": {'say': None, 'speed': None, 'wrap': None},
+        "group": "major"
     },
     {
         "module": "neopolitan",
         "subCommand": "test",
-        "friendlyName": "t Run Neopolitan Test"
+        "friendlyName": "Run Neopolitan Test",
+        "group": "test"
     },
     {
         "module": "neopolitan",
         "subCommand": "displayAll",
-        "friendlyName": "- Display All Symbols"
+        "friendlyName": "Display All Symbols",
+        "group": "demo"
     },
     {
         "module": "neopolitan",
         "subCommand": "displayAllLowercase",
-        "friendlyName": "- Display Lowercase Letters"
+        "friendlyName": "Display Lowercase Letters",
+        "group": "demo"
     },
     {
         "module": "neopolitan",
         "subCommand": "displayAllUppercase",
-        "friendlyName": "- Display Uppercase Letters"
+        "friendlyName": "Display Uppercase Letters",
+        "group": "demo"
     },
     {
         "module": "neopolitan",
         "subCommand": "displayAllNumbers",
-        "friendlyName": "- Display All Numbers"
+        "friendlyName": "Display All Numbers",
+        "group": "demo"
     },
     {
         "module": "neopolitan",
         "subCommand": "displayAllSymbols",
-        "friendlyName": "- Display All Symbols"
+        "friendlyName": "Display All Symbols",
+        "group": "demo"
     },
     {
         "module": "neopolitan",
         "subCommand": "colorDemo",
-        "friendlyName": "* Display Color Demo"
+        "friendlyName": "Display Color Demo",
+        "group": "demo"
     },
     {
         "module": "neopolitan",
         "subCommand": "stockTicker",
-        "friendlyName": "$ Run Stock Ticker"
+        "friendlyName": "Run Stock Ticker",
+        "group": "wowFactor"
     }
 ]
 
