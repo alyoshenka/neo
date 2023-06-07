@@ -6,6 +6,7 @@ import time as t
 from connection_builder import create_mqtt_connection, disconnect
 from initialize import initialize_subscriptions, initial_publish
 from log import init_logger, get_logger
+from neopolitan_handler import close_display
 
 def main(wait=100):
     """Main application function"""
@@ -25,4 +26,8 @@ def main(wait=100):
     disconnect(mqtt_connection)
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    finally:
+        close_display()
+        get_logger().info('Exiting Application')
