@@ -26,6 +26,7 @@ NEOPOLITAN_THREAD = None
 EVENT_QUEUE = None
 
 # pylint: disable=too-many-return-statements
+# pylint: disable=too-many-branches
 def command_map(data):
     """Returns the appropriate function"""
     logger = get_logger()

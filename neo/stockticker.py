@@ -33,7 +33,7 @@ def get_snp_tickers():
     except:
         get_logger().warning('Unable to load S&P500 tickers')
         return TICKERS
- 
+
 def get_nasdaq_tickers():
     """Load NASDAQ 100 ticker symbols"""
     try:
