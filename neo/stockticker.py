@@ -8,6 +8,7 @@ Note that this file is for demo purposes only,
 # pylint: disable=broad-except
 # pylint: disable=import-error
 from threading import Thread
+from random import shuffle
 import requests
 import yfinance as yf
 import pandas as pd
@@ -18,17 +19,19 @@ from neopolitan.const import HEIGHT, WIDTH
 from neopolitan.writing.data_transformation import dispatch_str_or_lst
 from log import get_logger
 
-TICKERS = ['tsla', 'uber', 'wmt', 'tgt', 'orcl', 'sbux', 'aapl', 'pep']
+TICKERS = ['DIS', 'AAL', 'BA', 'VT',
+           'tsla', 'uber', 'wmt', 'tgt', 'orcl', 'sbux', 'aapl', 'pep',
+           'META', 'GOOG', ]
 UP = '↑'
 DOWN = '↓'
-MIN_LEN = WIDTH * HEIGHT * 3 # todo: make sure works when scroll fast
-TICKER_IDX = 2 # 3?
+MIN_LEN = WIDTH * HEIGHT * 5 # todo: make sure works when scroll fast
+TICKER_IDX = 4
 
 def get_snp_tickers():
     """Load S&P 500 ticker symbols"""
     try:
         snp = pd.read_csv('neo/data/s_and_p.csv')
-        return snp['Symbol'].to_list()
+        return shuffle(snp['Symbol'].to_list())
     # pylint: disable=bare-except
     except:
         get_logger().warning('Unable to load S&P500 tickers')
@@ -40,7 +43,7 @@ def get_nasdaq_tickers():
         snp = pd.read_csv('neo/data/nasdaq_100.csv')
         thing = snp['Symbol'].to_list()
         thing = [s.strip() for s in thing]
-        return thing
+        return shuffle(thing)
     # pylint: disable=bare-except
     except:
         get_logger().warning('Unable to load NASDAQ100 tickers')
