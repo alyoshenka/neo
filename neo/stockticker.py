@@ -8,6 +8,7 @@ Note that this file is for demo purposes only,
 # pylint: disable=broad-except
 # pylint: disable=import-error
 from threading import Thread
+from random import shuffle
 import requests
 import yfinance as yf
 import pandas as pd
@@ -18,17 +19,21 @@ from neopolitan.const import HEIGHT, WIDTH
 from neopolitan.writing.data_transformation import dispatch_str_or_lst
 from log import get_logger
 
-TICKERS = ['tsla', 'uber', 'wmt', 'tgt', 'orcl', 'sbux', 'aapl', 'pep']
+TICKERS = ['DIS', 'AAL', 'BA',# 'VT',
+           'tsla', 'uber', 'wmt', 'tgt', 'orcl', 'sbux', 'aapl', 'pep',
+           'META', 'GOOG', ]
 UP = '↑'
 DOWN = '↓'
-MIN_LEN = WIDTH * HEIGHT * 3 # todo: make sure works when scroll fast
-TICKER_IDX = 2 # 3?
+MIN_LEN = WIDTH * HEIGHT * 5 # todo: make sure works when scroll fast
+TICKER_IDX = 4
 
 def get_snp_tickers():
     """Load S&P 500 ticker symbols"""
     try:
         snp = pd.read_csv('neo/data/s_and_p.csv')
-        return snp['Symbol'].to_list()
+        thing = snp['Symbol'].to_list()
+        shuffle(thing)
+        return thing
     # pylint: disable=bare-except
     except:
         get_logger().warning('Unable to load S&P500 tickers')
@@ -40,6 +45,7 @@ def get_nasdaq_tickers():
         snp = pd.read_csv('neo/data/nasdaq_100.csv')
         thing = snp['Symbol'].to_list()
         thing = [s.strip() for s in thing]
+        shuffle(thing)
         return thing
     # pylint: disable=bare-except
     except:
@@ -88,6 +94,8 @@ def nasdaq_100(events):
 def run(events, tickers):
     """Run the stock ticker"""
     get_logger().info('Running stock ticker')
+    if not tickers:
+        get_logger().warning('Ticker data not initialized')
 
     board_data = default_board_data.copy()
     board_data.message = construct_message(tickers)
@@ -108,11 +116,18 @@ def run(events, tickers):
 
 def construct_message(tickers):
     """Constructs the data to send to neopolitan to display stocks"""
-    all_ticker_data = [get_ticker_data(sym) for sym in tickers[0:TICKER_IDX]]
-    msg = []
-    for tick in all_ticker_data:
-        msg.append(('  ' + ticker_obj_to_string(tick), GREEN if tick['up?'] else RED))
-    return msg
+    try:
+        all_ticker_data = [get_ticker_data(sym) for sym in tickers[0:TICKER_IDX]]
+        msg = []
+        for tick in all_ticker_data:
+            if tick is not None:
+                msg.append(('  ' + ticker_obj_to_string(tick), GREEN if tick['up?'] else RED))
+            else:
+                msg.append(('   Error', RED))
+        return msg
+    except Exception as err:
+        get_logger().warning('Error initializing ticker data: %s', str(err))
+        return [('Error getting tickers', RED)]
 
 def get_ticker_data(sym):
     """"Query and return formatted data from a ticker symbol"""
