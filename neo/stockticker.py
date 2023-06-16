@@ -33,6 +33,18 @@ def get_snp_tickers():
     except:
         get_logger().warning('Unable to load S&P500 tickers')
         return TICKERS
+ 
+def get_nasdaq_tickers():
+    """Load NASDAQ 100 ticker symbols"""
+    try:
+        snp = pd.read_csv('neo/data/nasdaq_100.csv')
+        thing = snp['Symbol'].to_list()
+        thing = [s.strip() for s in thing]
+        return thing
+    # pylint: disable=bare-except
+    except:
+        get_logger().warning('Unable to load NASDAQ100 tickers')
+        return TICKERS
 
 def monitor_message_length(neop, tickers):
     """Monitors how much of a message is left, and fetches the next ticker if it is time"""
@@ -60,8 +72,20 @@ def monitor_message_length(neop, tickers):
                 new_data = dispatch_str_or_lst([(' - No internet connection -', RED)])
                 neop.board.set_data(neop.board.data + new_data)
 
+def default_tickers(events):
+    """Run with the default tickers"""
+    run(events, TICKERS)
+
+def snp_500(events):
+    """Run with S&P 500 tickers"""
+    run(events, get_snp_tickers())
+
+def nasdaq_100(events):
+    """Run with NASDAQ100 tickers"""
+    run(events, get_nasdaq_tickers())
+
 # pylint: disable=dangerous-default-value
-def run(events, tickers=get_snp_tickers()):
+def run(events, tickers):
     """Run the stock ticker"""
     get_logger().info('Running stock ticker')
 

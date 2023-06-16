@@ -18,7 +18,7 @@ from neopolitan.demos import \
     display_all_numbers, \
     display_all_symbols, \
     color_demo
-from stockticker import run
+from stockticker import default_tickers, snp_500, nasdaq_100
 from log import get_logger
 
 # todo: is global var ok?
@@ -62,7 +62,15 @@ def command_map(data):
     # todo: this should be somewhere else
     if data == 'stockTicker':
         logger.info('Returning "neopolitan stockTicker" func')
-        return lambda : open_display(run)
+        return lambda : open_display(default_tickers)
+    # todo: this should be somewhere else
+    if data == 'stockTickerSNP':
+        logger.info('Returning "neopolitan stockTickerSNP" func')
+        return lambda : open_display(snp_500)
+        # todo: this should be somewhere else
+    if data == 'stockTickerNASDAQ':
+        logger.info('Returning "neopolitan stockTickerNASDAQ" func')
+        return lambda : open_display(nasdaq_100)
     logger.warning('No Neopolitan action found for: %s', data)
     return None
 

@@ -80,7 +80,19 @@ OPERATIONS = [
     {
         "module": "neopolitan",
         "subCommand": "stockTicker",
-        "friendlyName": "Run Stock Ticker",
+        "friendlyName": "Default Tickers",
+        "group": "wowFactor"
+    },
+    {
+        "module": "neopolitan",
+        "subCommand": "stockTickerSNP",
+        "friendlyName": "S&P 500",
+        "group": "wowFactor"
+    },
+    {
+        "module": "neopolitan",
+        "subCommand": "stockTickerNASDAQ",
+        "friendlyName": "NASDAQ 100",
         "group": "wowFactor"
     }
 ]
