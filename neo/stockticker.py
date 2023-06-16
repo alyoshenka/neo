@@ -10,6 +10,7 @@ Note that this file is for demo purposes only,
 from threading import Thread
 import requests
 import yfinance as yf
+import pandas as pd
 from neopolitan.board_functions.colors import GREEN, RED
 from neopolitan.board_functions.board_data import default_board_data
 from neopolitan.naples import Neopolitan
@@ -23,16 +24,38 @@ DOWN = '↓'
 MIN_LEN = WIDTH * HEIGHT * 3 # todo: make sure works when scroll fast
 TICKER_IDX = 2 # 3?
 
-def monitor_message_length(neop):
+def get_snp_tickers():
+    """Load S&P 500 ticker symbols"""
+    try:
+        snp = pd.read_csv('neo/data/s_and_p.csv')
+        return snp['Symbol'].to_list()
+    # pylint: disable=bare-except
+    except:
+        get_logger().warning('Unable to load S&P500 tickers')
+        return TICKERS
+
+def get_nasdaq_tickers():
+    """Load NASDAQ 100 ticker symbols"""
+    try:
+        snp = pd.read_csv('neo/data/nasdaq_100.csv')
+        thing = snp['Symbol'].to_list()
+        thing = [s.strip() for s in thing]
+        return thing
+    # pylint: disable=bare-except
+    except:
+        get_logger().warning('Unable to load NASDAQ100 tickers')
+        return TICKERS
+
+def monitor_message_length(neop, tickers):
     """Monitors how much of a message is left, and fetches the next ticker if it is time"""
     # pylint: disable=global-statement
     global TICKER_IDX # bad? yeah probably
     while not neop.display.should_exit:
         if len(neop.board.data) < MIN_LEN:
             if is_connected_to_internet():
-                next_sym = TICKERS[TICKER_IDX]
+                next_sym = tickers[TICKER_IDX]
                 TICKER_IDX += 1
-                if TICKER_IDX >= len(TICKERS):
+                if TICKER_IDX >= len(tickers):
                     TICKER_IDX = 0
                 try:
                     next_ticker = get_ticker_data(next_sym)
@@ -49,12 +72,25 @@ def monitor_message_length(neop):
                 new_data = dispatch_str_or_lst([(' - No internet connection -', RED)])
                 neop.board.set_data(neop.board.data + new_data)
 
-def run(events):
+def default_tickers(events):
+    """Run with the default tickers"""
+    run(events, TICKERS)
+
+def snp_500(events):
+    """Run with S&P 500 tickers"""
+    run(events, get_snp_tickers())
+
+def nasdaq_100(events):
+    """Run with NASDAQ100 tickers"""
+    run(events, get_nasdaq_tickers())
+
+# pylint: disable=dangerous-default-value
+def run(events, tickers):
     """Run the stock ticker"""
     get_logger().info('Running stock ticker')
 
     board_data = default_board_data.copy()
-    board_data.message = construct_message()
+    board_data.message = construct_message(tickers)
     board_data.should_wrap = False
     board_data.scroll_fast()
 
@@ -62,7 +98,7 @@ def run(events):
         neop = Neopolitan(board_data=board_data, events=events)
         # thread that checks board data length
         #   query new data when it gets too low
-        thrd = Thread(target=monitor_message_length, args=(neop,))
+        thrd = Thread(target=monitor_message_length, args=(neop, tickers))
         thrd.start()
 
         neop.loop()
@@ -70,9 +106,9 @@ def run(events):
         thrd.join()
         del neop
 
-def construct_message():
+def construct_message(tickers):
     """Constructs the data to send to neopolitan to display stocks"""
-    all_ticker_data = [get_ticker_data(sym) for sym in TICKERS[0:TICKER_IDX]]
+    all_ticker_data = [get_ticker_data(sym) for sym in tickers[0:TICKER_IDX]]
     msg = []
     for tick in all_ticker_data:
         msg.append(('  ' + ticker_obj_to_string(tick), GREEN if tick['up?'] else RED))
