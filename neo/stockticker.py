@@ -43,7 +43,7 @@ def get_nasdaq_tickers():
         snp = pd.read_csv('neo/data/nasdaq_100.csv')
         thing = snp['Symbol'].to_list()
         thing = [s.strip() for s in thing]
-        return shuffle(thing)
+        return thing
     # pylint: disable=bare-except
     except:
         get_logger().warning('Unable to load NASDAQ100 tickers')
